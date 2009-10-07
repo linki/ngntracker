@@ -1,0 +1,24 @@
+<% title "Category" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @category.name %>
+</p>
+<p>
+  <strong>Parent:</strong>
+  <%= link_to h(@category.parent.name), @category.parent if @category.parent %>
+</p>
+<p>
+  <strong>Lft:</strong>
+  <%=h @category.lft %>
+</p>
+<p>
+  <strong>Rgt:</strong>
+  <%=h @category.rgt %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_category_path(@category) %> |
+  <%= link_to "Destroy", @category, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", categories_path %>
+</p>
