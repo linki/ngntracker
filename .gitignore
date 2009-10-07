@@ -1,0 +1,12 @@
+.DS_Store
+log/*.log
+tmp/**/*
+tmp/restart.txt
+public/system
+public/javascripts/base_packaged.js
+public/stylesheets/base_packaged.css
+config/database.yml
+config/amazon_s3.yml
+config/deploy.rb
+Capfile
+db/*.sqlite3
