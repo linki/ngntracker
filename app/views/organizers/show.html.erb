@@ -4,6 +4,10 @@
   <strong>Name:</strong>
   <%=h @organizer.name %>
 </p>
+<p>
+  <strong>Portals:</strong>
+  <ul><%= render @organizer.portals %></ul>
+</p>
 
 <p>
   <%= link_to "Edit", edit_organizer_path(@organizer) %> |

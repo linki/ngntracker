@@ -1,12 +1,10 @@
-<% form_for @portal do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :uri %><br />
-    <%= f.text_field :uri %>
-  </p>
-  <p><%= f.submit "Submit" %></p>
+<% semantic_form_for @portal do |f| %>
+  <% f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :uri %>
+    <%= f.input :organizer %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button 'Save' %>
+  <% end %>
 <% end %>
