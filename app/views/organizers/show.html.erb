@@ -1,0 +1,12 @@
+<% title "Organizer" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @organizer.name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_organizer_path(@organizer) %> |
+  <%= link_to "Destroy", @organizer, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", organizers_path %>
+</p>

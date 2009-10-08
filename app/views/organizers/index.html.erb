@@ -1,0 +1,17 @@
+<% title "Organizers" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% for organizer in @organizers %>
+    <tr>
+      <td><%=h organizer.name %></td>
+      <td><%= link_to "Show", organizer %></td>
+      <td><%= link_to "Edit", edit_organizer_path(organizer) %></td>
+      <td><%= link_to "Destroy", organizer, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Organizer", new_organizer_path %></p>
