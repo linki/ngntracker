@@ -4,4 +4,6 @@ class Category < ActiveRecord::Base
   validates_presence_of :name
   
   acts_as_nested_set
+  
+  has_many :tickets
 end

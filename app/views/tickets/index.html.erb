@@ -1,0 +1,47 @@
+<% title "Tickets" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Solution</th>
+    <th>State</th>
+    <th>Priority</th>
+    <th>Direct Link</th>
+    <th>Mantis Bug</th>
+    <th>Category</th>
+    <th>User</th>
+    <th>Organizer</th>
+    <th>Portal</th>
+    <th>Deadline At</th>
+    <th>Published At</th>
+    <th>Closed At</th>
+    <th>Archived At</th>
+    <th>Deleted At</th>
+  </tr>
+  <% for ticket in @tickets %>
+    <tr>
+      <td><%=h ticket.name %></td>
+      <td><%=h ticket.description %></td>
+      <td><%=h ticket.solution %></td>
+      <td><%=h ticket.state %></td>
+      <td><%=h ticket.priority %></td>
+      <td><%=h ticket.direct_link %></td>
+      <td><%=h ticket.mantis_bug %></td>
+      <td><%=h ticket.category_name %></td>
+      <td><%=h ticket.user_username %></td>
+      <td><%=h ticket.organizer_name %></td>
+      <td><%=h ticket.portal_name %></td>
+      <td><%= time ticket.deadline_at %></td>
+      <td><%= time ticket.published_at %></td>
+      <td><%= time ticket.closed_at %></td>
+      <td><%= time ticket.archived_at %></td>
+      <td><%= time ticket.deleted_at %></td>
+      <td><%= link_to "Show", ticket %></td>
+      <td><%= link_to "Edit", edit_ticket_path(ticket) %></td>
+      <td><%= link_to "Destroy", ticket, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Ticket", new_ticket_path %></p>

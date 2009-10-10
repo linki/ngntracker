@@ -9,8 +9,13 @@ describe Organizer do
     Factory.build(:organizer, :name => '').should_not be_valid
   end
   
-  it "should have portals" do
+  it "should assign portals" do
     portals = [Factory(:portal)]
     Factory.build(:organizer, :portals => portals).portals.should == portals
   end
+  
+  it "should assign tickets" do
+    tickets = [Factory(:ticket)]
+    Factory.build(:organizer, :tickets => tickets).tickets.should == tickets
+  end    
 end

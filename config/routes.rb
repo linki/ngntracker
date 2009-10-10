@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :tickets
+
   map.resources :portals
 
   map.resources :organizers

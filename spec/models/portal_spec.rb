@@ -8,9 +8,14 @@ describe Portal do
   it "should require a name" do
     Factory.build(:portal, :name => '').should_not be_valid
   end
-  
-  it "should have an organizer" do
+
+  it "should assign an organizer" do
     organizer = Factory(:organizer)
     Factory.build(:portal, :organizer => organizer).organizer.should == organizer
+  end
+  
+  it "should assign tickets" do
+    tickets = [Factory(:ticket)]
+    Factory.build(:portal, :tickets => tickets).tickets.should == tickets
   end  
 end

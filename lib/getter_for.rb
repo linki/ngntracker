@@ -7,7 +7,8 @@ module GetterFor
     def getter_for(*args)
       attributes = args.extract_options!      
       attributes.each do |model, methods|
-        methods.to_a.each do |method|
+        methods = [methods] unless methods.is_a?(Array)
+        methods.each do |method|
           define_method "#{model}_#{method}" do
             send(model).send(method) if send(model) 
           end
@@ -18,7 +19,8 @@ module GetterFor
     def setter_for(*args)
       attributes = args.extract_options!
       attributes.each do |model, methods|
-        methods.to_a.each do |method|
+        methods = [methods] unless methods.is_a?(Array)
+        methods.each do |method|
           define_method "#{model}_#{method}=" do |attribute|
             self.send("#{model}=", model.to_s.camelize.constantize.send("find_or_create_by_#{method}", attribute))
           end

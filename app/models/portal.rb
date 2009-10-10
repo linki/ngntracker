@@ -5,5 +5,7 @@ class Portal < ActiveRecord::Base
   
   belongs_to :organizer
   
+  has_many :tickets
+  
   getter_for :organizer => :name
 end
