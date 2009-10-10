@@ -28,4 +28,9 @@ describe Ticket do
     portal = Factory(:portal)
     Factory.build(:ticket, :portal => portal).portal.should == portal
   end
+  
+  it "should assign comments" do
+    comments = [Factory(:comment)]
+    Factory.build(:ticket, :comments => comments).comments.should == comments
+  end  
 end

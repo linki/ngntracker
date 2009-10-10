@@ -12,5 +12,10 @@ describe User do
   it "should assign tickets" do
     tickets = [Factory(:ticket)]
     Factory.build(:user, :tickets => tickets).tickets.should == tickets
-  end  
+  end
+  
+  it "should assign comments" do
+    comments = [Factory(:comment)]
+    Factory.build(:user, :comments => comments).comments.should == comments
+  end
 end

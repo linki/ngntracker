@@ -2,6 +2,12 @@ Factory.define :category do |f|
   f.name "General"
 end
 
+Factory.define :comment do |f|
+  f.text "Hello World"
+  f.association :ticket
+  f.association :user
+end
+
 Factory.define :organizer do |f|
   f.name "Messe Berlin"
 end

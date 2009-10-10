@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
   validates_presence_of :username
   
   has_many :tickets
+  has_many :comments  
 end

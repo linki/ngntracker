@@ -1,0 +1,8 @@
+<% title "Edit Comment" %>
+
+<%= render :partial => 'form' %>
+
+<p>
+  <%= link_to "Show", @comment %> |
+  <%= link_to "View All", ticket_comments_path(@comment.ticket) %>
+</p>

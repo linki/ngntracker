@@ -1,0 +1,20 @@
+<% title "Comment" %>
+
+<p>
+  <strong>Text:</strong>
+  <%=h @comment.text %>
+</p>
+<p>
+  <strong>Ticket:</strong>
+  <%=h @comment.ticket_name %>
+</p>
+<p>
+  <strong>User:</strong>
+  <%=h @comment.user_username %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_comment_path(@comment) %> |
+  <%= link_to "Destroy", @comment, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", ticket_comments_path(@comment.ticket) %>
+</p>
