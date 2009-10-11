@@ -9,10 +9,6 @@ describe Page do
     Factory.build(:page, :name => '').should_not be_valid
   end
   
-  it "should require a permalink" do
-    Factory.build(:page, :permalink => '').should_not be_valid
-  end
-
   it "should assign a user" do
     user = Factory(:user)
     Factory.build(:page, :user => user).user.should == user

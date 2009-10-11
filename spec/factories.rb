@@ -14,7 +14,6 @@ end
 
 Factory.define :page do |f|
   f.name "Hilfe"
-  f.permalink "help-me"
 end
 
 Factory.define :portal do |f|
