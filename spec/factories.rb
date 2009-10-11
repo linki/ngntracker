@@ -12,6 +12,11 @@ Factory.define :organizer do |f|
   f.name "Messe Berlin"
 end
 
+Factory.define :page do |f|
+  f.name "Hilfe"
+  f.permalink "help-me"
+end
+
 Factory.define :portal do |f|
   f.name "ITB"
 end

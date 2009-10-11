@@ -10,6 +10,7 @@ class Ticket < ActiveRecord::Base
   belongs_to :portal
   
   has_many :comments, :dependent => :destroy
+  has_many :pages, :dependent => :destroy
   
   getter_for :user => :username,
              :category => :name,

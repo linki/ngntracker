@@ -18,4 +18,9 @@ describe User do
     comments = [Factory(:comment)]
     Factory.build(:user, :comments => comments).comments.should == comments
   end
+  
+  it "should assign pages" do
+    pages = [Factory(:page)]
+    Factory.build(:user, :pages => pages).pages.should == pages
+  end  
 end

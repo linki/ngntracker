@@ -32,5 +32,10 @@ describe Ticket do
   it "should assign comments" do
     comments = [Factory(:comment)]
     Factory.build(:ticket, :comments => comments).comments.should == comments
+  end
+
+  it "should assign pages" do
+    pages = [Factory(:page)]
+    Factory.build(:ticket, :pages => pages).pages.should == pages
   end  
 end
