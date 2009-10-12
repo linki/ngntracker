@@ -2,21 +2,11 @@
   <% f.inputs do %>
     <%= f.input :name %>
     <%= f.input :description %>
-    <%= f.input :solution %>
-    <%= f.input :state %>
-    <%= f.input :priority %>
-    <%= f.input :direct_link %>
-    <%= f.input :mantis_bug %>
-    <%= f.input :category, :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" } %>
-    <%= f.input :organizer %>
-    <%= f.input :portal %>
-    <%= f.input :deadline_at %>
-    <%= f.input :published_at %>
-    <%= f.input :closed_at %>
-    <%= f.input :archived_at %>
-    <%= f.input :deleted_at %>
+    <%= f.input :organizer %>    
+    <%= f.input :category, :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" } %>    
+    <%= f.input :priority, :collection => [1, 2, 3], :as => :radio %>
   <% end %>
   <% f.buttons do %>
-    <%= f.commit_button 'Save' %>
+    <%= f.commit_button %>
   <% end %>
 <% end %>
