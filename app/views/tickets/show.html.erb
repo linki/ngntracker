@@ -14,7 +14,7 @@
     <%= textilize @ticket.description %>
   </p>
 
-  <% if @ticket.solution %>
+  <% unless @ticket.solution.blank? %>
     <h3>Solution</h3>
     <p>
       <%=h @ticket.solution %>
@@ -23,6 +23,14 @@
 
   <p>
     Last updated <%= time_ago_in_words @ticket.updated_at %> ago (<%= time @ticket.updated_at %>)
+  </p>
+  
+  <p>
+    You visited this ticket <%= @visits.count if @visits %> times.
+  </p>
+
+  <p>
+    The last time was <%= time @visits.updated_at if @visits %>.
   </p>
 
   <div class="actions">

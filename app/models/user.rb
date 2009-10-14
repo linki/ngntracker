@@ -9,4 +9,10 @@ class User < ActiveRecord::Base
   has_many :comments
   
   has_many :pages
+  
+  has_many :visits, :dependent => :destroy
+  
+  def last_visit_for(ticket)
+    visits.for(ticket).first if visits.for(ticket)
+  end
 end

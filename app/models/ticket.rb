@@ -12,6 +12,8 @@ class Ticket < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :pages, :dependent => :destroy
   
+  has_many :visits, :dependent => :destroy
+  
   publishable
     
   getter_for :user      => :username,
