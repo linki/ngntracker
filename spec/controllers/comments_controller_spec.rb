@@ -27,10 +27,10 @@ describe CommentsController do
     response.should render_template(:new)
   end
   
-  it "create action should redirect when model is valid" do
+  it "create action should redirect to parent when model is valid" do
     Comment.any_instance.stubs(:valid?).returns(true)
     post :create, :ticket_id => Factory(:ticket)
-    response.should redirect_to(comment_url(assigns[:comment]))
+    response.should redirect_to(ticket_url(assigns[:ticket]))
   end
   
   it "edit action should render edit template" do

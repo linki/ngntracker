@@ -17,10 +17,10 @@ class CommentsController < ApplicationController
   def create
     @comment = Comment.new(params[:comment])
     @comment.ticket = @ticket
-    @comment.user = @current_user
+    @comment.user   = @current_user
     if @comment.save
       flash[:notice] = "Successfully created comment."
-      redirect_to @comment
+      redirect_to @ticket
     else
       render :action => 'new'
     end
