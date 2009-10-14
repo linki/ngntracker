@@ -2,7 +2,7 @@ class TicketsController < ApplicationController
   before_filter :login_required
   
   def index
-    @tickets = Ticket.all
+    @tickets = Ticket.published.recent
   end
   
   def show

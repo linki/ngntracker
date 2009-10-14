@@ -1,5 +1,5 @@
 class Ticket < ActiveRecord::Base
-  attr_accessible :name, :description, :solution, :state, :priority, :direct_link, :mantis_id, :category_id, :organizer_id, :portal_id, :deadline_at, :published_at, :closed_at, :archived_at, :deleted_at
+  attr_accessible :name, :description, :solution, :priority, :category_id, :organizer_id, :published
   
   validates_presence_of :name
   
@@ -12,8 +12,12 @@ class Ticket < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :pages, :dependent => :destroy
   
-  getter_for :user => :username,
-             :category => :name,
+  publishable
+    
+  getter_for :user      => :username,
+             :category  => :name,
              :organizer => :name,
-             :portal => :name
+             :portal    => :name
+             
+  named_scope :recent, :order => 'updated_at DESC'
 end

@@ -6,6 +6,12 @@
     <%= f.input :category, :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" } %>    
     <%= f.input :priority, :collection => [1, 2, 3], :as => :radio %>
   <% end %>
+  <% unless @ticket.new_record? %>
+    <% f.inputs do %>
+      <%= f.input :solution %>
+      <%= f.input :published, :as => :boolean %>
+    <% end %>
+  <% end %>
   <% f.buttons do %>
     <%= f.commit_button %>
   <% end %>
