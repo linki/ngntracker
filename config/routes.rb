@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :pages
-
   map.signup 'signup', :controller => 'users', :action => 'new'
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
   map.login 'login', :controller => 'user_sessions', :action => 'new'
@@ -10,8 +8,9 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :categories
   
-  map.resources :tickets, :shallow => true do |tickets|
-    tickets.resources :comments
+  map.resources :tickets do |tickets|
+    tickets.resources :comments, :shallow => true
+    tickets.resources :pages, :shallow => true
   end
 
   map.resources :portals

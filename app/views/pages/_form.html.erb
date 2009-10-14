@@ -1,4 +1,4 @@
-<% semantic_form_for @page do |f| %>
+<% semantic_form_for [@ticket, @page] do |f| %>
   <% f.inputs do %>
     <%= f.input :name %>
     <%= f.input :content %>

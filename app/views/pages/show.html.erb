@@ -1,9 +1,17 @@
 <% title h(@page.name) %>
 
+<p>
+  Created by <%= @page.user_username %> <%= time_ago_in_words @page.created_at %> ago (<%= time @page.created_at %>).
+</p>
+
 <%= textilize @page.content %>
+
+<p>
+  Last updated <%= time_ago_in_words @page.updated_at %> ago (<%= time @page.updated_at %>)
+</p>
 
 <p>
   <%= link_to "Edit", edit_page_path(@page) %> |
   <%= link_to "Destroy", @page, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", pages_path %>
+  <%= link_to "View All", ticket_pages_path(@page.ticket) %>
 </p>

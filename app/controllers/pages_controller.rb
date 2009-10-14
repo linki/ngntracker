@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   before_filter :login_required
+  before_filter :find_ticket, :only => [:index, :new, :create]  
   
   def index
     @pages = Page.all
@@ -18,7 +19,8 @@ class PagesController < ApplicationController
   
   def create
     @page = Page.new(params[:page])
-    @page.user = @current_user
+    @page.ticket = @ticket
+    @page.user   = @current_user
     if @page.save
       flash[:notice] = "Successfully created page."
       redirect_to @page
@@ -45,6 +47,12 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
     @page.destroy
     flash[:notice] = "Successfully destroyed page."
-    redirect_to pages_url
+    redirect_to ticket_pages_url(@page.ticket)
   end
+  
+  private
+  
+  def find_ticket
+    @ticket = Ticket.find(params[:ticket_id])
+  end  
 end

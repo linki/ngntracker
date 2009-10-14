@@ -12,4 +12,6 @@ class Page < ActiveRecord::Base
   
   getter_for :ticket => :name,
              :user => :username
+             
+  named_scope :recent, :order => 'updated_at DESC'             
 end
