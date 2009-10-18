@@ -7,10 +7,8 @@ class TicketsController < ApplicationController
   
   def show
     @ticket = Ticket.find(params[:id])
-    
-    @visits = @current_user.last_visit_for(@ticket)
-    
-    @current_user.visits.find_or_create_by_ticket_id(@ticket).increment!(:count)
+    @visit = @current_user.visit_of(@ticket)
+    @current_user.visit!(@ticket)
   end
   
   def new

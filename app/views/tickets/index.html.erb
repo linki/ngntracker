@@ -2,14 +2,16 @@
 
 <table>
   <tr>
-    <th>ID</th>
+    <th>ID</th>    
+    <th>New</th>
     <th>Name</th>
     <th>Category</th>
     <th>User</th>
   </tr>
   <% for ticket in @tickets %>
     <tr>
-      <td><%= ticket.id %></td>
+      <td>#<%= ticket.id %></td>
+      <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
       <td><%=h ticket.name %></td>
       <td><%=h ticket.category_name %></td>
       <td><%=h ticket.user_username %></td>
