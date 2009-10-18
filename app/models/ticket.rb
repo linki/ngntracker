@@ -1,5 +1,5 @@
 class Ticket < ActiveRecord::Base
-  attr_accessible :name, :description, :solution, :priority, :category_id, :organizer_id, :published
+  attr_accessible :name, :description, :solution, :priority, :category_id, :organizer_id, :assignee_id, :published
   
   validates_presence_of :name
   
@@ -8,6 +8,8 @@ class Ticket < ActiveRecord::Base
   
   belongs_to :organizer
   belongs_to :portal
+  
+  belongs_to :assignee, :class_name => 'User'
   
   has_many :comments, :dependent => :destroy
   has_many :pages, :dependent => :destroy
@@ -19,7 +21,8 @@ class Ticket < ActiveRecord::Base
   getter_for :user      => :username,
              :category  => :name,
              :organizer => :name,
-             :portal    => :name
+             :portal    => :name,
+             :assignee  => :username
              
   named_scope :recent, :order => 'updated_at DESC'
   

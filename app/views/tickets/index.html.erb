@@ -6,7 +6,9 @@
     <th>New</th>
     <th>Name</th>
     <th>Category</th>
-    <th>User</th>
+    <th>Creator</th>
+    <th>Assigned to</th>
+    <th>Updated at</th>
   </tr>
   <% for ticket in @tickets %>
     <tr>
@@ -15,6 +17,7 @@
       <td><%=h ticket.name %></td>
       <td><%=h ticket.category_name %></td>
       <td><%=h ticket.user_username %></td>
+      <td><%=h ticket.assignee_username %></td>      
       <td><%= time ticket.updated_at %></td>
       <td><%= link_to "Show", ticket %></td>
       <td><%= link_to "Edit", edit_ticket_path(ticket) %></td>

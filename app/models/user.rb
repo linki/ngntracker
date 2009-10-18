@@ -1,8 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation
     
-  acts_as_authentic
-  
   validates_presence_of :username
   
   has_many :tickets
@@ -10,7 +8,11 @@ class User < ActiveRecord::Base
   
   has_many :pages
   
+  has_many :assigned_tickets, :class_name => 'Ticket', :foreign_key => 'assignee_id'
+  
   has_many :visits, :dependent => :destroy
+  
+  acts_as_authentic  
   
   def new_ticket?(ticket)
     return true unless visit_of(ticket)

@@ -8,6 +8,7 @@
   <% end %>
   <% unless @ticket.new_record? %>
     <% f.inputs do %>
+      <%= f.input :assignee %>
       <%= f.input :solution %>
       <%= f.input :published, :as => :boolean %>
     <% end %>

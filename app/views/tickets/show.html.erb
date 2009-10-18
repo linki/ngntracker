@@ -2,7 +2,7 @@
 
 <div id="ticket">
   <p>
-    The Ticket is <%= @ticket.state %> and has Priority <%= @ticket.priority %>.
+    The Ticket is <%= @ticket.state %> and has Priority <%= @ticket.priority %>. Responsible for this ticket is <%= @ticket.assignee ? @ticket.assignee_username : 'nobody' %>.
   </p>
 
   <p>
