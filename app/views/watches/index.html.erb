@@ -1,0 +1,19 @@
+<% title "Watches" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Ticket</th>
+  </tr>
+  <% for watch in @watches %>
+    <tr>
+      <td><%=h watch.user_id %></td>
+      <td><%=h watch.ticket_id %></td>
+      <td><%= link_to "Show", watch %></td>
+      <td><%= link_to "Edit", edit_watch_path(watch) %></td>
+      <td><%= link_to "Destroy", watch, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Watch", new_watch_path %></p>

@@ -11,6 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tickets do |tickets|
     tickets.resources :comments, :shallow => true
     tickets.resources :pages, :shallow => true
+    tickets.resources :watches, :only => [:create, :destroy], :shallow => true
   end
 
   map.resources :pages

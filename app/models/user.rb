@@ -12,6 +12,9 @@ class User < ActiveRecord::Base
   
   has_many :visits, :dependent => :destroy
   
+  has_many :watches, :dependent => :destroy
+  has_many :watched_tickets, :through => :watches, :source => :ticket
+  
   acts_as_authentic  
   
   def new_ticket?(ticket)
@@ -26,4 +29,12 @@ class User < ActiveRecord::Base
   def visit!(ticket)
     visits.find_or_initialize_by_ticket_id(ticket.id).increment!(:count)
   end
+
+  def watch_of(ticket)
+    watches.find_by_ticket_id(ticket.id)
+  end
+
+  def watch!(ticket)
+    watches.find_or_create_by_ticket_id(ticket.id)
+  end  
 end

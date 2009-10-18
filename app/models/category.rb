@@ -6,4 +6,8 @@ class Category < ActiveRecord::Base
   acts_as_nested_set
   
   has_many :tickets
+  
+  def name_with_ancestors
+    self_and_ancestors.collect(&:name).join(' >> ')
+  end
 end

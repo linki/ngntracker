@@ -6,7 +6,7 @@
   </p>
 
   <p>
-    Created by <%= @ticket.user_username %> <%= time_ago_in_words @ticket.created_at %> ago (<%= time @ticket.created_at %>) in Category <%= @ticket.category_name %>.
+    Created by <%= @ticket.user_username %> <%= time_ago_in_words @ticket.created_at %> ago (<%= time @ticket.created_at %>) in Category <%= @ticket.category_name_with_ancestors %>.
   </p>
 
   <h2>Description</h2>
@@ -44,6 +44,14 @@
   
   <p>
     Last updated <%= time_ago_in_words @ticket.updated_at %> ago. (<%= time @ticket.updated_at %>)
+  </p>
+  
+  <p>
+    <% if @watch %>
+      You are watching this ticket. <%= link_to "Unwatch", @watch, :confirm => 'Are you sure?', :method => :delete %>
+    <% else %>
+      <%= link_to "Watch this Ticket", ticket_watches_path(@ticket), :method => :post %>
+    <% end %>
   </p>
   
   <h2>Comments</h2>

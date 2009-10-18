@@ -16,10 +16,13 @@ class Ticket < ActiveRecord::Base
   
   has_many :visits, :dependent => :destroy
   
+  has_many :watches, :dependent => :destroy
+  has_many :watching_users, :through => :watches, :source => :user
+  
   publishable
     
   getter_for :user      => :username,
-             :category  => :name,
+             :category  => [:name, :name_with_ancestors],
              :organizer => :name,
              :portal    => :name,
              :assignee  => :username
