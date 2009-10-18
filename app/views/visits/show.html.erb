@@ -1,0 +1,16 @@
+<% title "Visit" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @visit.user_id %>
+</p>
+<p>
+  <strong>Ticket:</strong>
+  <%=h @visit.ticket_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_visit_path(@visit) %> |
+  <%= link_to "Destroy", @visit, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", visits_path %>
+</p>

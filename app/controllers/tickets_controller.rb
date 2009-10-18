@@ -8,6 +8,8 @@ class TicketsController < ApplicationController
   def show
     @ticket  = Ticket.find(params[:id])
     @comment = Comment.new
+    @visit = @current_user.visit_of(@ticket)
+    @current_user.visit!(@ticket)
   end
   
   def new

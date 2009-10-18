@@ -13,11 +13,15 @@ ActionController::Routing::Routes.draw do |map|
     tickets.resources :pages, :shallow => true
   end
 
+  map.resources :pages
+
   map.resources :portals
 
   map.resources :organizers
+  
+  map.resources :visits
 
-  map.root :controller => 'user_sessions', :action => 'new'
+  map.root :tickets
 
   # The priority is based upon order of creation: first created -> highest priority.
 

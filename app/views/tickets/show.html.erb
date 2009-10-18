@@ -32,8 +32,18 @@
     <%= link_to "Add a page", new_ticket_page_path(@ticket) %> to this ticket
   </p>
 
+  <% if @visit %>
+    <p>
+      You visited this ticket <%= @visit.count %> times.
+    </p>
+  
+    <p>
+      You were here <%= time_ago_in_words @visit.updated_at %> ago. (<%= time @visit.updated_at %>)
+    </p>
+  <% end %>
+  
   <p>
-    Last updated <%= time_ago_in_words @ticket.updated_at %> ago (<%= time @ticket.updated_at %>)
+    Last updated <%= time_ago_in_words @ticket.updated_at %> ago. (<%= time @ticket.updated_at %>)
   </p>
   
   <h2>Comments</h2>
