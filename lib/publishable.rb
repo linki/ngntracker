@@ -11,7 +11,7 @@ module Publishable
         end
 
         define_method "published" do
-          true == (send(:published_at) && send(:published_at).utc <= Time.now.utc)
+          send(:published_at) && send(:published_at) <= Time.now
         end
 
         define_method "published=" do |boolean|

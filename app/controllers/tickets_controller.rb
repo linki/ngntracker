@@ -2,7 +2,7 @@ class TicketsController < ApplicationController
   before_filter :login_required
   
   def index
-    @tickets = Ticket.published.recent
+    @tickets = Ticket.active.published.recent
   end
   
   def show
@@ -44,8 +44,13 @@ class TicketsController < ApplicationController
   
   def destroy
     @ticket = Ticket.find(params[:id])
-    @ticket.destroy
+    @ticket.destroy_or_trash
     flash[:notice] = "Successfully destroyed ticket."
     redirect_to tickets_url
+  end
+  
+  def deleted
+    @tickets = Ticket.deleted.published.recent
+    render :action => 'index'
   end
 end

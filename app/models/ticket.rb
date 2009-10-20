@@ -46,4 +46,24 @@ class Ticket < ActiveRecord::Base
   aasm_event :close do
     transitions :to => :closed, :from => [:new, :process]
   end
+  
+  named_scope :active, lambda { |*args|
+    { :conditions => ['deleted_at IS NULL OR deleted_at > ?', (args.first || Time.now).utc] }
+  }
+
+  named_scope :deleted, lambda { |*args|
+    { :conditions => ['deleted_at IS NOT NULL AND deleted_at <= ?', (args.first || Time.now).utc] }
+  }
+  
+  def destroy_or_trash
+    deleted? ? destroy : trash
+  end
+  
+  def trash
+    self.update_attribute(:deleted_at, Time.now)
+  end
+  
+  def deleted?
+    deleted_at && deleted_at <= Time.now
+  end
 end
