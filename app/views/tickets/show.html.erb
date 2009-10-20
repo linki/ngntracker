@@ -64,6 +64,7 @@
     <p>
       <%= link_to "Back", tickets_path %> |
       <%= link_to "Edit", edit_ticket_path(@ticket) %> |
+      <%= link_to "Archive", archive_ticket_path(@ticket), :confirm => 'Are you sure?', :method => :put %> |
       <%= link_to "Destroy", @ticket, :confirm => 'Are you sure?', :method => :delete %>
     </p>
   </div>

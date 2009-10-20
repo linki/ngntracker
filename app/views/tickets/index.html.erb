@@ -21,6 +21,7 @@
       <td><%= time ticket.updated_at %></td>
       <td><%= link_to "Show", ticket %></td>
       <td><%= link_to "Edit", edit_ticket_path(ticket) %></td>
+      <td><%= link_to "Archive", archive_ticket_path(ticket), :confirm => 'Are you sure?', :method => :put %></td>
       <td><%= link_to "Destroy", ticket, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>

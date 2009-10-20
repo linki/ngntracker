@@ -41,12 +41,25 @@ class TicketsController < ApplicationController
       render :action => 'edit'
     end
   end
+    
+  def archive
+    @ticket = Ticket.find(params[:id])
+    @ticket.archive
+    flash[:notice] = "Successfully archived ticket."
+    redirect_to tickets_url
+  end
+  
   
   def destroy
     @ticket = Ticket.find(params[:id])
     @ticket.destroy_or_trash
     flash[:notice] = "Successfully destroyed ticket."
     redirect_to tickets_url
+  end
+
+  def archived
+    @tickets = Ticket.undeleted.archived.published.recent
+    render :action => 'index'
   end
   
   def deleted

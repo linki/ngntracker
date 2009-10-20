@@ -46,11 +46,27 @@ class Ticket < ActiveRecord::Base
   aasm_event :close do
     transitions :to => :closed, :from => [:new, :process]
   end
+
+  def self.active
+    unarchived.undeleted
+  end
+
+  named_scope :unarchived, lambda { |*args|
+    { :conditions => ['archived_at IS NULL OR archived_at > ?', (args.first || Time.now).utc] }
+  }
   
-  named_scope :active, lambda { |*args|
-    { :conditions => ['deleted_at IS NULL OR deleted_at > ?', (args.first || Time.now).utc] }
+  named_scope :archived, lambda { |*args|
+    { :conditions => ['archived_at IS NOT NULL AND archived_at <= ?', (args.first || Time.now).utc] }
   }
 
+  def archive
+    self.update_attribute(:archived_at, Time.now)
+  end
+  
+  named_scope :undeleted, lambda { |*args|
+    { :conditions => ['deleted_at IS NULL OR deleted_at > ?', (args.first || Time.now).utc] }
+  }
+  
   named_scope :deleted, lambda { |*args|
     { :conditions => ['deleted_at IS NOT NULL AND deleted_at <= ?', (args.first || Time.now).utc] }
   }
