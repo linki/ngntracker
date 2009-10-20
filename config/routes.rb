@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :categories
   
-  map.resources :tickets, :collection => { :archived => :get, :deleted => :get }, :member => { :archive => :put } do |tickets|
+  map.resources :tickets, :member => { :archive => :put } do |tickets|
     tickets.resources :comments, :shallow => true
     tickets.resources :pages, :shallow => true
     tickets.resources :watches, :only => [:create, :destroy], :shallow => true
