@@ -31,8 +31,12 @@ module Publishable
         end
 
         named_scope :published, lambda { |*args|
-          { :conditions => ['published_at IS NOT NULL AND published_at <= ?', (args.first || Time.now).utc] }
-        } 
+          if args.first.nil? || ["true", true, "1", 1].include?(args.first)
+            { :conditions => ['published_at IS NOT NULL AND published_at <= ?', Time.now.utc] }
+          else
+            { :conditions => ['published_at IS NULL OR published_at > ?', Time.now.utc] }
+          end
+        }
       end
     end
   end

@@ -1,11 +1,11 @@
-class TicketsController < ApplicationController
+class TicketsController < InheritedResources::Base
   before_filter :login_required, :except => [:new, :create]
   
-  def index
-    @tickets = Ticket.published.recent
-    @tickets = params[:archived] ? @tickets.archived : @tickets.unarchived unless params[:deleted]
-    @tickets = params[:deleted]  ? @tickets.deleted  : @tickets.undeleted
-  end
+  respond_to :html
+
+  has_scope :published, :default => true, :boolean => true, :only => :index
+  has_scope :archived, :default => false, :only => :index
+  has_scope :deleted, :default => false, :only => :index  
   
   def show
     @ticket  = Ticket.find(params[:id])
@@ -13,10 +13,7 @@ class TicketsController < ApplicationController
     @watch = @current_user.watch_of(@ticket)
     @visit = @current_user.visit_of(@ticket)
     @current_user.visit!(@ticket)
-  end
-  
-  def new
-    @ticket = Ticket.new
+    show!
   end
   
   def create
@@ -27,39 +24,13 @@ class TicketsController < ApplicationController
       # make that better
       @ticket.user = User.create!(:username => params[:ticket][:user][:email], :email => params[:ticket][:user][:email], :password => 'testtest', :password_confirmation => 'testtest') unless params[:ticket][:user][:email].blank?
     end
-    if @ticket.save
-      flash[:notice] = "Successfully created ticket."
-      redirect_to @ticket
-    else
-      render :action => 'new'
-    end
+    create!
   end
   
-  def edit
-    @ticket = Ticket.find(params[:id])
-  end
-  
-  def update
-    @ticket = Ticket.find(params[:id])
-    if @ticket.update_attributes(params[:ticket])
-      flash[:notice] = "Successfully updated ticket."
-      redirect_to @ticket
-    else
-      render :action => 'edit'
-    end
-  end
-    
   def archive
     @ticket = Ticket.find(params[:id])
     @ticket.archive
     flash[:notice] = "Successfully archived ticket."
-    redirect_to tickets_url
-  end
-  
-  def destroy
-    @ticket = Ticket.find(params[:id])
-    @ticket.destroy_or_trash
-    flash[:notice] = "Successfully destroyed ticket."
     redirect_to tickets_url
   end
 end
