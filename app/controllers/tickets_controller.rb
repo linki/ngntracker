@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => [:new, :create]
   
   def index
     @tickets = Ticket.published.recent
@@ -21,7 +21,12 @@ class TicketsController < ApplicationController
   
   def create
     @ticket = Ticket.new(params[:ticket])
-    @ticket.user = current_user    
+    if logged_in?
+      @ticket.user = current_user
+    else
+      # make that better
+      @ticket.user = User.create!(:username => params[:ticket][:user][:email], :email => params[:ticket][:user][:email], :password => 'testtest', :password_confirmation => 'testtest') unless params[:ticket][:user][:email].blank?
+    end
     if @ticket.save
       flash[:notice] = "Successfully created ticket."
       redirect_to @ticket

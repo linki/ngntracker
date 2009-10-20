@@ -1,7 +1,7 @@
 class Ticket < ActiveRecord::Base
   attr_accessible :name, :description, :solution, :priority, :category_id, :organizer_id, :assignee_id, :published
   
-  validates_presence_of :name
+  validates_presence_of :name, :description, :category
   
   belongs_to :user
   belongs_to :category

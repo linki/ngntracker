@@ -1,10 +1,18 @@
+<% @ticket.priority ||= 1 %>
+
 <% semantic_form_for @ticket do |f| %>
   <% f.inputs do %>
-    <%= f.input :name %>
-    <%= f.input :description %>
-    <%= f.input :organizer %>    
-    <%= f.input :category, :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" } %>    
-    <%= f.input :priority, :collection => [1, 2, 3], :as => :radio %>
+    <%= f.input :name, :hint => 'Enter a descriptive name for your ticket' %>
+    <%= f.input :category, :hint => 'Choose one of the categories that match best', :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" } %>
+    <%= f.input :description, :hint => 'Describe your problem as precise as possible' %>
+    <%= f.input :organizer, :hint => 'Select the concerned organizer' %>
+    <%= f.input :portal, :hint => 'Select the concerned portal' %>
+    <%= f.input :priority, :hint => "Estimate the problem's priority", :collection => [1, 2, 3], :as => :radio %>
+    <% unless logged_in? %>
+      <% f.inputs :for => :user do |user_form| %>
+        <%= user_form.input :email, :hint => 'Enter your email address so you can track your problem' %>
+      <% end %>
+    <% end %>
   <% end %>
   <% unless @ticket.new_record? %>
     <% f.inputs do %>
