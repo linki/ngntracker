@@ -15,7 +15,7 @@ module Recyclable
         end
 
         define_method "trash!" do
-          send(:update_attribute, :deleted_at, Time.now) unless send(:deleted?)
+          send(:update_attribute, :deleted_at, Time.now.utc) unless send(:deleted?)
         end
 
         define_method "recycle!" do

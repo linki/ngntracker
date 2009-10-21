@@ -16,14 +16,14 @@ module Publishable
 
         define_method "published=" do |published|
           if ["true", true, "1", 1].include?(published)
-            write_attribute(:published_at, Time.now) unless send(:published?)
+            write_attribute(:published_at, Time.now.utc) unless send(:published?)
           else
             write_attribute(:published_at, nil) if send(:published?)
           end
         end
         
         define_method "publish!" do
-          send(:update_attribute, :published_at, Time.now) unless send(:published?)
+          send(:update_attribute, :published_at, Time.now.utc) unless send(:published?)
         end
 
         define_method "unpublish!" do

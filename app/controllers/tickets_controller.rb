@@ -29,6 +29,7 @@ class TicketsController < ApplicationController
       flash[:notice] = "Successfully created ticket."
       redirect_to @ticket
     else
+      flash.now[:error] = "Error while creating ticket."
       render :action => 'new'
     end
   end

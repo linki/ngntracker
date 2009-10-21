@@ -16,14 +16,14 @@ module Archivable
 
         define_method "archived=" do |archived|
           if ["true", true, "1", 1].include?(archived)
-            write_attribute(:archived_at, Time.now) unless send(:archived?)
+            write_attribute(:archived_at, Time.now.utc) unless send(:archived?)
           else
             write_attribute(:archived_at, nil) if send(:archived?)
           end
         end
         
         define_method "archive!" do
-          send(:update_attribute, :archived_at, Time.now) unless send(:archived?)
+          send(:update_attribute, :archived_at, Time.now.utc) unless send(:archived?)
         end
 
         define_method "unarchive!" do

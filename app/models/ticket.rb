@@ -52,6 +52,7 @@ class Ticket < ActiveRecord::Base
   end
   
   def self.search(params)
-    published.recent.deleted(params[:deleted] || false).archived(params[:archived] || false)
+    recent.deleted(params[:deleted] || false).archived(params[:archived] || false)
+    # published
   end
 end
