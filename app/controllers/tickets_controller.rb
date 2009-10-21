@@ -2,9 +2,7 @@ class TicketsController < ApplicationController
   before_filter :login_required, :except => [:new, :create]
   
   def index
-    @tickets = Ticket.published.recent
-    @tickets = params[:archived] ? @tickets.archived : @tickets.unarchived unless params[:deleted]
-    @tickets = params[:deleted]  ? @tickets.deleted  : @tickets.undeleted
+    @tickets = Ticket.search(params)
   end
   
   def show

@@ -14,16 +14,16 @@ module Publishable
           send(:published_at) && send(:published_at) <= Time.now
         end
 
-        define_method "published=" do |boolean|
-          if boolean == "1" || boolean == true
-            write_attribute(:published_at, Time.now.utc) unless send(:published?)
+        define_method "published=" do |published|
+          if ["true", true, "1", 1].include?(published)
+            write_attribute(:published_at, Time.now) unless send(:published?)
           else
             write_attribute(:published_at, nil) if send(:published?)
           end
         end
         
-        define_method "publish!" do |*args|
-          send(:update_attribute, :published_at, (args.first || Time.now).utc) unless send(:published?)
+        define_method "publish!" do
+          send(:update_attribute, :published_at, Time.now) unless send(:published?)
         end
 
         define_method "unpublish!" do
@@ -31,8 +31,12 @@ module Publishable
         end
 
         named_scope :published, lambda { |*args|
-          { :conditions => ['published_at IS NOT NULL AND published_at <= ?', (args.first || Time.now).utc] }
-        } 
+          if args.first.nil? || ["true", true, "1", 1].include?(args.first)
+            { :conditions => ['published_at IS NOT NULL AND published_at <= ?', Time.now.utc] }
+          else
+            { :conditions => ['published_at IS NULL OR published_at > ?', Time.now.utc] }
+          end
+        }
       end
     end
   end

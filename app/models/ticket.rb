@@ -46,32 +46,34 @@ class Ticket < ActiveRecord::Base
   aasm_event :close do
     transitions :to => :closed, :from => [:new, :process]
   end
-
-  def self.active
-    unarchived.undeleted
+  
+  def self.search(params)
+    deleted(params[:deleted] || false).
+    archived(params[:archived] || false).
+    published.recent
   end
 
-  named_scope :unarchived, lambda { |*args|
-    { :conditions => ['archived_at IS NULL OR archived_at > ?', (args.first || Time.now).utc] }
-  }
-  
   named_scope :archived, lambda { |*args|
-    { :conditions => ['archived_at IS NOT NULL AND archived_at <= ?', (args.first || Time.now).utc] }
+    if args.first.nil? || ["true", true, "1", 1].include?(args.first)
+      { :conditions => ['archived_at IS NOT NULL AND archived_at <= ?', Time.now.utc] }
+    else
+      { :conditions => ['archived_at IS NULL OR archived_at > ?', Time.now.utc] }
+    end
   }
 
   def archive
     self.update_attribute(:archived_at, Time.now)
   end
   
-  named_scope :undeleted, lambda { |*args|
-    { :conditions => ['deleted_at IS NULL OR deleted_at > ?', (args.first || Time.now).utc] }
-  }
-  
   named_scope :deleted, lambda { |*args|
-    { :conditions => ['deleted_at IS NOT NULL AND deleted_at <= ?', (args.first || Time.now).utc] }
+    if args.first.nil? || ["true", true, "1", 1].include?(args.first)
+      { :conditions => ['deleted_at IS NOT NULL AND deleted_at <= ?', Time.now.utc] }
+    else
+      { :conditions => ['deleted_at IS NULL OR deleted_at > ?', Time.now.utc] }
+    end
   }
   
-  def destroy_or_trash
+  def destroy_or_trash!
     deleted? ? destroy : trash
   end
   
