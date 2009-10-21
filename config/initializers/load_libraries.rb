@@ -1,5 +1,7 @@
 class ActiveRecord::Base
   include GetterFor
   include Permalinked
-  include Publishable  
+  include Publishable
+  include Archivable
+  include Recyclable  
 end

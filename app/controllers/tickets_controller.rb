@@ -49,14 +49,14 @@ class TicketsController < ApplicationController
     
   def archive
     @ticket = Ticket.find(params[:id])
-    @ticket.archive
+    @ticket.archive!
     flash[:notice] = "Successfully archived ticket."
     redirect_to tickets_url
   end
   
   def destroy
     @ticket = Ticket.find(params[:id])
-    @ticket.destroy_or_trash
+    @ticket.destroy_or_trash!
     flash[:notice] = "Successfully destroyed ticket."
     redirect_to tickets_url
   end
