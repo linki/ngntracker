@@ -7,7 +7,7 @@ module Publishable
     def publishable(options = {})
       instance_eval do
         define_method "published?" do
-          send(:published)
+          !!send(:published)
         end
 
         define_method "published" do

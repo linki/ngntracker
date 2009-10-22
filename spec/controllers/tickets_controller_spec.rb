@@ -51,10 +51,10 @@ describe TicketsController do
     response.should redirect_to(ticket_url(assigns[:ticket]))
   end
   
-  it "destroy action should destroy model and redirect to index action" do
-    ticket = Factory(:ticket)
+  it "destroy action should trash model and redirect to index action" do
+    ticket = Factory(:ticket, :deleted_at => nil)
     delete :destroy, :id => ticket
     response.should redirect_to(tickets_url)
-    Ticket.exists?(ticket.id).should be_false
+    ticket.should be_deleted
   end
 end

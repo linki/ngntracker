@@ -8,6 +8,14 @@ describe Ticket do
   it "should require a name" do
     Factory.build(:ticket, :name => '').should_not be_valid
   end
+
+  it "should require a description" do
+    Factory.build(:ticket, :description => '').should_not be_valid
+  end
+
+  it "should require a category" do
+    Factory.build(:ticket, :category => nil).should_not be_valid
+  end
   
   it "should assign a user" do
     user = Factory(:user)
@@ -38,4 +46,19 @@ describe Ticket do
     pages = [Factory(:page)]
     Factory.build(:ticket, :pages => pages).pages.should == pages
   end  
+  
+  it "should assign watches" do
+    watches = [Factory(:watch)]
+    Factory.build(:ticket, :watches => watches).watches.should == watches
+  end
+
+  it "should assign watching users" do
+    watching_users = [Factory(:user)]
+    Factory.build(:ticket, :watching_users => watching_users).watching_users.should == watching_users
+  end
+  
+  it "should assign visits" do
+    visits = [Factory(:visit)]
+    Factory.build(:ticket, :visits => visits).visits.should == visits
+  end
 end

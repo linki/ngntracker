@@ -7,7 +7,7 @@ module Archivable
     def archivable(options = {})
       instance_eval do
         define_method "archived?" do
-          send(:archived)
+          !!send(:archived)
         end
 
         define_method "archived" do

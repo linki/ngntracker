@@ -10,7 +10,7 @@ describe VisitsController do
   end
   
   it "show action should render show template" do
-    get :show, :id => Visit.first
+    get :show, :id => Factory(:visit)
     response.should render_template(:show)
   end
   
@@ -32,24 +32,25 @@ describe VisitsController do
   end
   
   it "edit action should render edit template" do
-    get :edit, :id => Visit.first
+    get :edit, :id => Factory(:visit)
     response.should render_template(:edit)
   end
   
   it "update action should render edit template when model is invalid" do
+    visit = Factory(:visit)
     Visit.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => Visit.first
+    put :update, :id => visit
     response.should render_template(:edit)
   end
   
   it "update action should redirect when model is valid" do
     Visit.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => Visit.first
+    put :update, :id => Factory(:visit)
     response.should redirect_to(visit_url(assigns[:visit]))
   end
   
   it "destroy action should destroy model and redirect to index action" do
-    visit = Visit.first
+    visit = Factory(:visit)
     delete :destroy, :id => visit
     response.should redirect_to(visits_url)
     Visit.exists?(visit.id).should be_false

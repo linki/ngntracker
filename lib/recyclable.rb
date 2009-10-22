@@ -7,7 +7,7 @@ module Recyclable
     def recyclable(options = {})
       instance_eval do        
         define_method "deleted?" do
-          send(:deleted_at) && send(:deleted_at) <= Time.now
+          !!send(:deleted_at) && send(:deleted_at) <= Time.now
         end
 
         define_method "destroy_or_trash!" do

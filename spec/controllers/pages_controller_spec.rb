@@ -7,7 +7,7 @@ describe PagesController do
   before { login_as_user }
   
   it "index action should render index template" do
-    get :index
+    get :index, :ticket_id => Factory(:ticket)
     response.should render_template(:index)
   end
   
@@ -17,19 +17,19 @@ describe PagesController do
   end
   
   it "new action should render new template" do
-    get :new
+    get :new, :ticket_id => Factory(:ticket)
     response.should render_template(:new)
   end
   
   it "create action should render new template when model is invalid" do
     Page.any_instance.stubs(:valid?).returns(false)
-    post :create
+    post :create, :ticket_id => Factory(:ticket)
     response.should render_template(:new)
   end
   
   it "create action should redirect when model is valid" do
     Page.any_instance.stubs(:valid?).returns(true)
-    post :create
+    post :create, :ticket_id => Factory(:ticket)
     response.should redirect_to(page_url(assigns[:page]))
   end
   
@@ -54,7 +54,7 @@ describe PagesController do
   it "destroy action should destroy model and redirect to index action" do
     page = Factory(:page)
     delete :destroy, :id => page
-    response.should redirect_to(pages_url)
+    response.should redirect_to(ticket_pages_url(page.ticket))
     Page.exists?(page.id).should be_false
   end
 end

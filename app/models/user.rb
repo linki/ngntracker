@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
   has_many :assigned_tickets, :class_name => 'Ticket', :foreign_key => 'assignee_id'
   
   has_many :visits, :dependent => :destroy
-  
+  has_many :visited_tickets, :through => :visits, :source => :ticket
+    
   has_many :watches, :dependent => :destroy
   has_many :watched_tickets, :through => :watches, :source => :ticket
   

@@ -6,5 +6,6 @@ module ControllerMacros
   def login(user)
     activate_authlogic
     UserSession.stubs(:find).returns(UserSession.create!(user))
+    user
   end  
 end
