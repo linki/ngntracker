@@ -2,11 +2,11 @@
 
 <div id="ticket">
   <p>
-    The Ticket is <%= @ticket.state %> and has Priority <%= @ticket.priority %>. Responsible for this ticket is <%= @ticket.assignee ? @ticket.assignee_username : 'nobody' %>.
+    The Ticket is <%= @ticket.state %> and has Priority <%= @ticket.priority %>. Responsible for this ticket is <%= @ticket.assignee ? @ticket.assignee_name : 'nobody' %>.
   </p>
 
   <p>
-    Created by <%= @ticket.user_username %> <%= time_ago_in_words @ticket.created_at %> ago (<%= time @ticket.created_at %>) in Category <%= @ticket.category_name_with_ancestors %>.
+    Created by <%= @ticket.user_name %> <%= time_ago_in_words @ticket.created_at %> ago (<%= time @ticket.created_at %>) in Category <%= @ticket.category_name_with_ancestors %>.
   </p>
 
   <h2>Description</h2>

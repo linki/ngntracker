@@ -1,6 +1,6 @@
 module ControllerMacros
   def login_as_user
-    login(User.find_by_username('martin') || Factory(:user, :username => 'martin', :password => 'secret')) 
+    login(User.find_by_login('martin') || Factory(:user, :login => 'martin', :password => 'secret')) 
   end
 
   def login(user)

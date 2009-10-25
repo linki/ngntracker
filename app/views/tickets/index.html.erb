@@ -16,8 +16,8 @@
       <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
       <td><%=h ticket.name %></td>
       <td><%=h ticket.category_name %></td>
-      <td><%=h ticket.user_username %></td>
-      <td><%=h ticket.assignee_username %></td>      
+      <td><%=h ticket.user_name %></td>
+      <td><%=h ticket.assignee_name %></td>      
       <td><%= time ticket.updated_at %></td>
       <td><%= link_to "Show", ticket %></td>
       <td><%= link_to "Edit", edit_ticket_path(ticket) %></td>

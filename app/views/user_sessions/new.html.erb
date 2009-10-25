@@ -2,15 +2,12 @@
 
 <p>Don't have an account? <%= link_to "Sign up!", signup_path %></p>
 
-<% form_for @user_session do |f| %>
-  <%= f.error_messages %>
-  <p>
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p><%= f.submit "Log in" %></p>
+<% semantic_form_for @user_session do |f| %>
+  <% f.inputs do %>
+    <%= f.input :login %>
+    <%= f.input :password %>
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button 'Log in' %>
+  <% end %>  
 <% end %>

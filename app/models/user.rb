@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :username, :email, :password, :password_confirmation
+  attr_accessible :name, :login, :email, :password, :password_confirmation
     
-  validates_presence_of :username
+  validates_presence_of :name, :login, :email, :password, :password_confirmation
   
   has_many :tickets
   has_many :comments

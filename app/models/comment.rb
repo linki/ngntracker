@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   
   getter_for :ticket => :name,
-             :user => :username
+             :user => :name
              
   named_scope :recent, :order => 'created_at DESC'
 end

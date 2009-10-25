@@ -10,14 +10,16 @@ describe UserSessionsController do
   end
   
   it "create action should render new template when authentication is invalid" do
-    post :create, :user_session => { :username => "foo", :password => "badpassword" }
+    Factory(:user, :login => 'foo', :password => 'secret')
+    post :create, :user_session => { :login => "foo", :password => "badpassword" }
     response.should render_template(:new)
     UserSession.find.should be_nil
   end
   
   it "create action should redirect when authentication is valid" do
-    post :create, :user_session => { :username => "foo", :password => "secret" }
+    user = Factory(:user, :login => 'foo', :password => 'secret')    
+    post :create, :user_session => { :login => "foo", :password => "secret" }
     response.should redirect_to(root_url)
-    UserSession.find.user.should == users(:foo)
+    UserSession.find.user.should == user
   end
 end

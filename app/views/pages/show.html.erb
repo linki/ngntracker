@@ -1,7 +1,7 @@
 <% title h(@page.name) %>
 
 <p>
-  Created by <%= @page.user_username %> <%= time_ago_in_words @page.created_at %> ago (<%= time @page.created_at %>).
+  Created by <%= @page.user_name %> <%= time_ago_in_words @page.created_at %> ago (<%= time @page.created_at %>).
 </p>
 
 <%= textilize @page.content %>

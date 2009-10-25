@@ -4,9 +4,21 @@ describe User do
   it "should be valid" do
     Factory.build(:user).should be_valid
   end
+
+  it "should require a name" do
+    Factory.build(:user, :name => '').should_not be_valid
+  end
   
-  it "should require a username" do
-    Factory.build(:user, :username => '').should_not be_valid
+  it "should require a login" do
+    Factory.build(:user, :login => '').should_not be_valid
+  end
+  
+  it "should require an email" do
+    Factory.build(:user, :email => '').should_not be_valid
+  end
+
+  it "should require a password" do
+    Factory.build(:user, :password => '').should_not be_valid
   end
   
   it "should assign tickets" do

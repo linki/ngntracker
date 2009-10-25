@@ -23,7 +23,7 @@ class TicketsController < ApplicationController
       @ticket.user = current_user
     else
       # make that better
-      @ticket.user = User.create!(:username => params[:ticket][:user][:email], :email => params[:ticket][:user][:email], :password => 'testtest', :password_confirmation => 'testtest') unless params[:ticket][:user][:email].blank?
+      @ticket.user = User.create!(:name => params[:ticket][:user][:email].split('@').first.titleize.gsub('.', ' '), :login => params[:ticket][:user][:email].split('@').first, :email => params[:ticket][:user][:email], :password => 'testtest', :password_confirmation => 'testtest') unless params[:ticket][:user][:email].blank?
     end
     if @ticket.save
       flash[:notice] = "Successfully created ticket."

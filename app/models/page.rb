@@ -11,7 +11,7 @@ class Page < ActiveRecord::Base
   publishable
   
   getter_for :ticket => :name,
-             :user => :username
+             :user => :name
              
   named_scope :recent, :order => 'updated_at DESC'             
 end

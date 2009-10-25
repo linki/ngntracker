@@ -1,8 +1,7 @@
-Given /^I am logged in$/ do
+Given /^I have no users in the database$/ do
   User.delete_all
-  Factory(:user, :username => 'martin', :password => 'secret')
-  visit login_url
-  fill_in "Username", :with => 'martin'
-  fill_in "Password", :with => 'secret'
-  click_button "Log in"
+end
+
+Then /^I should have ([0-9]+) users? in the database$/ do |count|
+  User.count.should == count.to_i
 end

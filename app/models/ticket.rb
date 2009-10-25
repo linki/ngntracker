@@ -25,11 +25,11 @@ class Ticket < ActiveRecord::Base
   
   recyclable
     
-  getter_for :user      => :username,
+  getter_for :user      => :name,
              :category  => [:name, :name_with_ancestors],
              :organizer => :name,
              :portal    => :name,
-             :assignee  => :username
+             :assignee  => :name
              
   named_scope :recent, :order => 'updated_at DESC'
   
