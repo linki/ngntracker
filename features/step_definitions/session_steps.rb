@@ -5,9 +5,13 @@ Given /^I am logged in as "([^\"]*)" with the password "([^\"]*)"$/ do |login, p
   click_button "Log in"
 end
 
-Given /^I am logged in$/ do
-  Factory(:user, :login => 'martin', :password => 'secret')
+Given /^I am logged in as "([^\"]*)"$/ do |login|
+  Factory(:user, :login => login, :password => 'secret')
   Given 'I am logged in as "martin" with the password "secret"'
+end
+
+Given /^I am logged in$/ do
+  Given 'I am logged in as "martin"'
 end
 
 Given /^I am logged in as an admin$/ do

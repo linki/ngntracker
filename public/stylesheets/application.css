@@ -79,3 +79,8 @@ a {
   font-size: 12px;
   list-style: disc;
 }
+
+#user_status {
+  float: right;
+  font-size: 12px;
+}

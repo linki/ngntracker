@@ -51,6 +51,11 @@ class Ticket < ActiveRecord::Base
     transitions :to => :closed, :from => [:new, :process]
   end
   
+  named_scope :visible_for, lambda { |user|
+    { :conditions => ['user_id = ? OR published_at IS NOT NULL AND published_at <= ?', user.id, Time.now.utc] }
+  }
+  
+  
   def self.search(params)
     recent.deleted(params[:deleted] || false).archived(params[:archived] || false)
     # published

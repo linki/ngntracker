@@ -14,7 +14,7 @@ Feature: Create New Ticket
       And I fill in the following:
             | Name        | Fehler auf der Plattform |
             | Description | Something doesn't work   |
-      And I select " General" from "Category"
+      And I select "General" from "Category"
       And I press "Create Ticket"
      Then I should see "Successfully created ticket." within "#flash_notice"
       And I should see "Fehler auf der Plattform" within "#title"
