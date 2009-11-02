@@ -1,12 +1,8 @@
-<% title "Category" %>
+<% title @category.name %>
 
 <p>
-  <strong>Name:</strong>
-  <%=h @category.name %>
-</p>
-<p>
   <strong>Parent:</strong>
-  <%= link_to h(@category.parent.name), @category.parent if @category.parent %>
+  <span id="parent"><%= link_to h(@category.parent.name), @category.parent if @category.parent %></span>
 </p>
 <p>
   <strong>Lft:</strong>

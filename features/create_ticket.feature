@@ -1,4 +1,4 @@
-Feature: Create New Ticket
+Feature: Create Ticket
   In order to submit my bug report
   As a user
   I want to create a new ticket

@@ -15,6 +15,8 @@ module NavigationHelpers
       tickets_path
     when /the users page/
       users_path
+    when /the categories page/
+      categories_path
       
     # Add more mappings here.
     # Here is a more fancy example:

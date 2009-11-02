@@ -1,9 +1,9 @@
 <% semantic_form_for @category do |f| %>
   <% f.inputs do %>
     <%= f.input :name %>
-    <%= f.input :parent, :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" } %>
+    <%= f.input :parent, :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}".strip } %>
   <% end %>
   <% f.buttons do %>
-    <%= f.commit_button 'Save' %>
+    <%= f.commit_button %>
   <% end %>
 <% end %>

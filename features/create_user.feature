@@ -1,4 +1,4 @@
-Feature: Create New User
+Feature: Create User
   In order to allow users to see public tickets
   As an admin
   I want to create a new user
