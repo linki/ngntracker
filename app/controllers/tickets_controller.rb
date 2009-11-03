@@ -2,7 +2,7 @@ class TicketsController < ApplicationController
   before_filter :login_required, :except => [:new, :create]
   
   def index
-    @tickets = Ticket.visible_for(@current_user).recent
+    @tickets = Ticket.visible_for(@current_user).recent.search(params)
   end
   
   def show

@@ -11,11 +11,11 @@ module NavigationHelpers
     when /the homepage/
       '/'
 
-    when /the tickets page/
+    when /the list of tickets/
       tickets_path
-    when /the users page/
+    when /the list of users/
       users_path
-    when /the categories page/
+    when /the list of categories/
       categories_path
       
     # Add more mappings here.

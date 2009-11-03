@@ -8,8 +8,17 @@ Given /^I have the following tickets in the database:$/ do |table|
   end
 end
 
+Given /^I have the ticket "([^\"]*)"$/ do |name|
+  Factory(:ticket, :name => name)
+end
+
 Given /^I have no tickets in the database$/ do
   Ticket.delete_all
+end
+
+Given /^the ticket "([^\"]*)" is published$/ do |name|
+  ticket = Ticket.find_by_name!(name)
+  ticket.publish!
 end
 
 Then /^I should have no tickets in the database$/ do

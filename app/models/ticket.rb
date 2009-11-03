@@ -57,7 +57,6 @@ class Ticket < ActiveRecord::Base
   
   
   def self.search(params)
-    recent.deleted(params[:deleted] || false).archived(params[:archived] || false)
-    # published
+    all :conditions => ['name LIKE :search OR description LIKE :search', { :search => "%#{params[:search]}%" }]
   end
 end

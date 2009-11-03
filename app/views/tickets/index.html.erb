@@ -1,5 +1,11 @@
 <% title "Tickets" %>
 
+<% form_tag tickets_path, :method => :get do %>
+  <%= label_tag :search %>
+  <%= text_field_tag :search, params[:search] %>
+  <%= submit_tag "Submit" %>
+<% end %>
+
 <table id="tickets">
   <tr>
     <th>ID</th>    
@@ -11,15 +17,14 @@
     <th>Updated at</th>
   </tr>
   <% for ticket in @tickets %>
-    <tr>
+    <tr id="ticket-<%= ticket.id %>">
       <td>#<%= ticket.id %></td>
       <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
-      <td><%=h ticket.name %></td>
+      <td><%= link_to h(ticket.name), ticket %></td>
       <td><%=h ticket.category_name %></td>
       <td><%=h ticket.user_name %></td>
       <td><%=h ticket.assignee_name %></td>      
       <td><%= time ticket.updated_at %></td>
-      <td><%= link_to "Show", ticket %></td>
       <td><%= link_to "Edit", edit_ticket_path(ticket) %></td>
       <td><%= link_to "Archive", archive_ticket_path(ticket), :confirm => 'Are you sure?', :method => :put %></td>
       <td><%= link_to "Destroy", ticket, :confirm => 'Are you sure?', :method => :delete %></td>
