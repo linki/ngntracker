@@ -2,30 +2,44 @@
 <html lang='en-US' xml:lang='en-US' xmlns='http://www.w3.org/1999/xhtml'>
   <head>
     <title><%= h(yield(:title) || "Untitled") %></title>
+    <%= stylesheet_link_tag 'blueprint/screen' %>
+    <%= stylesheet_link_tag 'blueprint/print', :media => "print" %>
+    <!--[if lt IE 8]>
+      <%= stylesheet_link_tag 'blueprint/ie' %>
+    <![endif]-->
     <%= stylesheet_link_tag 'formtastic', 'application' %>
     <%= yield(:head) %>
   </head>
   <body>
-    <div id="container">
-      <%- flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <%- end -%>
-      
-      <div id="user_status">
-        <% if logged_in? %>
-          Welcome <%= current_user.name %>! Not you?
-          <%= link_to "Log out", logout_path %>
-        <% else %>
-          <%= link_to "Sign up", signup_path %> or
-          <%= link_to "log in", login_path %>.
-        <% end %>
+    <body>
+      <div id="container">
+        <%- flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%- end -%>
+        
+        <div id="navigation">
+          <ul>
+            <li><%= link_to "Tickets", tickets_path %></li>
+            <li><%= link_to "Manage Categories", categories_path %></li>            
+          </ul>
+        </div>
+
+        <div id="user_status">
+          <% if logged_in? %>
+            Welcome <%= current_user.name %>! Not you?
+            <%= link_to "Log out", logout_path %>
+          <% else %>
+            <%= link_to "Sign up", signup_path %> or
+            <%= link_to "log in", login_path %>.
+          <% end %>
+        </div>
+
+        <%- if show_title? -%>
+          <h1 id="title"><%=h yield(:title) %></h1>
+        <%- end -%>
+
+        <%= yield %>
       </div>
-      
-      <%- if show_title? -%>
-        <h1 id="title"><%=h yield(:title) %></h1>
-      <%- end -%>
-      
-      <%= yield %>
-    </div>
+    </body>
   </body>
 </html>
