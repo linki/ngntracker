@@ -51,6 +51,14 @@ class Ticket < ActiveRecord::Base
     transitions :to => :closed, :from => [:new, :process]
   end
   
+  def open?
+    !closed?
+  end
+  
+  def closed?
+    state.to_sym == :closed
+  end
+  
   named_scope :visible_for, lambda { |user|
     { :conditions => ['user_id = ? OR published_at IS NOT NULL AND published_at <= ?', user.id, Time.now.utc] }
   }

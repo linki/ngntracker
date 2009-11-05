@@ -2,6 +2,10 @@
 
 <div id="ticket">
   <p>
+    <%= link_to "Close Ticket", close_ticket_path(@ticket), :method => :put %>
+  </p>
+  
+  <p>
     The Ticket is <%= @ticket.state %> and has Priority <%= @ticket.priority %>. Responsible for this ticket is <%= @ticket.assignee ? @ticket.assignee_name : 'nobody' %>.
   </p>
 

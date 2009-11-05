@@ -61,4 +61,13 @@ describe Ticket do
     visits = [Factory(:visit)]
     Factory.build(:ticket, :visits => visits).visits.should == visits
   end
+  
+  describe "close" do
+    it "should close" do
+      ticket = Factory(:ticket)
+      ticket.should be_open
+      ticket.close
+      ticket.should be_closed
+    end
+  end
 end
