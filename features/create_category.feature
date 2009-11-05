@@ -26,7 +26,7 @@ Feature: Create Category
      Then I should see "Successfully created category." within "#flash_notice"
       And I should see "Special" within "#title"
       And I should see "General" within "#parent"
-      And I should have 2 categories in the database  
+      And I should have 2 categories in the database
   
   
 

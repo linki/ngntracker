@@ -6,16 +6,16 @@ Feature: Visit Tickets
   Background:
     Given I am logged in
   
-  Scenario: Mark new tickets
+  Scenario: An not yet visited ticket is new
     Given I have the ticket "Fehler auf der Plattform"
       And the ticket "Fehler auf der Plattform" is published
-     When I go to the list of tickets
+     When I go to the tickets page
      Then I should see "new"
   
-  Scenario: Do not mark old tickets
+  Scenario: A visted tickets is not new
     Given I have the ticket "Fehler auf der Plattform"
       And the ticket "Fehler auf der Plattform" is published    
-     When I go to the list of tickets
+     When I go to the tickets page
       And I follow "Fehler auf der Plattform"
       And I follow "Back"
      Then I should not see "new"
