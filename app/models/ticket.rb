@@ -19,6 +19,8 @@ class Ticket < ActiveRecord::Base
   has_many :watches, :dependent => :destroy
   has_many :watching_users, :through => :watches, :source => :user
   
+  acts_as_audited
+  
   publishable
   
   archivable

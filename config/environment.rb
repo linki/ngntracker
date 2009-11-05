@@ -8,9 +8,11 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
   config.gem "authlogic"
-  config.gem "justinfrench-formtastic", :lib => 'formtastic', :source => 'http://gems.github.com'
+  config.gem "justinfrench-formtastic", :lib => 'formtastic', :source => 'http://gemcutter.org'
   
-  config.gem "rubyist-aasm", :lib => 'aasm', :source => 'http://gems.github.com'
+  config.gem 'acts_as_audited', :lib => false, :source => 'http://gemcutter.org'
+  
+  config.gem "rubyist-aasm", :lib => 'aasm', :source => 'http://gemcutter.org'
   
   config.gem "RedCloth", :lib => 'redcloth'
   config.gem "coderay"
