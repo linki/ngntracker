@@ -27,13 +27,17 @@ class Ticket < ActiveRecord::Base
   
   recyclable
     
-  getter_for :user      => :name,
+  getter_for :user      =>  :name,
              :category  => [:name, :name_with_ancestors],
-             :organizer => :name,
-             :portal    => :name,
-             :assignee  => :name
-             
+             :organizer =>  :name,
+             :portal    =>  :name,
+             :assignee  =>  :name
+
   named_scope :recent, :order => 'updated_at DESC'
+
+  named_scope :visible_for, lambda { |user|
+    { :conditions => ['tickets.user_id = ? OR tickets.published_at IS NOT NULL AND tickets.published_at <= ?', user.id, Time.now.utc] }
+  }
   
   include AASM
   
@@ -60,12 +64,11 @@ class Ticket < ActiveRecord::Base
   def closed?
     state.to_sym == :closed
   end
-  
-  named_scope :visible_for, lambda { |user|
-    { :conditions => ['user_id = ? OR published_at IS NOT NULL AND published_at <= ?', user.id, Time.now.utc] }
-  }
-  
-  
+
+  def self.active
+    not_deleted.not_archived
+  end
+
   def self.search(params)
     all :conditions => ['name LIKE :search OR description LIKE :search', { :search => "%#{params[:search]}%" }]
   end

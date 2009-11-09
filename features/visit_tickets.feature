@@ -6,16 +6,13 @@ Feature: Visit Tickets
   Background:
     Given I am logged in
   
-  Scenario: An not yet visited ticket is new
-    Given I have the ticket "Fehler auf der Plattform"
-      And the ticket "Fehler auf der Plattform" is published
-     When I go to the tickets page
-     Then I should see "new"
+  Scenario: A not yet visited ticket is new
+    Given a ticket exists with name: "Fehler auf der Plattform", published_at: "2000-01-01"
+    When I go to the tickets page
+    Then I should see "new"
   
   Scenario: A visted tickets is not new
-    Given I have the ticket "Fehler auf der Plattform"
-      And the ticket "Fehler auf der Plattform" is published    
-     When I go to the tickets page
-      And I follow "Fehler auf der Plattform"
-      And I follow "Back"
-     Then I should not see "new"
+    Given a ticket exists with name: "Fehler auf der Plattform", published_at: "2000-01-01"
+    When I go to that ticket's page
+    And I follow "Back to list"
+    Then I should not see "new"

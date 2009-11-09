@@ -1,33 +1,41 @@
 module Recyclable
+  TRUE_VALUES = ["true", true, "1", 1] unless const_defined?(:TRUE_VALUES)
+  
   def self.included(base)
     base.extend(ClassMethods)
   end
   
   module ClassMethods
     def recyclable(options = {})
-      define_method "deleted?" do
-        !!send(:deleted_at) && send(:deleted_at) <= Time.now
-      end
+      class_eval do
+        def deleted?
+          !!deleted_at && deleted_at <= Time.now
+        end
 
-      define_method "destroy_or_trash!" do
-        send(:deleted?) ? send(:destroy) : send(:trash!)
-      end
+        def destroy_or_trash!
+          deleted? ? destroy : trash!
+        end
 
-      define_method "trash!" do
-        send(:update_attribute, :deleted_at, Time.now.utc) unless send(:deleted?)
-      end
+        def trash!
+          update_attribute(:deleted_at, Time.now.utc) unless deleted?
+        end
 
-      define_method "recycle!" do
-        send(:update_attribute, :deleted_at, nil) if send(:deleted?)
+        def recycle!
+          update_attribute(:deleted_at, nil)
+        end
       end
-
+      
       named_scope :deleted, lambda { |*args|
-        if args.first.nil? || ["true", true, "1", 1].include?(args.first)
+        if args.first.nil? || TRUE_VALUES.include?(args.first)
           { :conditions => ['deleted_at IS NOT NULL AND deleted_at <= ?', Time.now.utc] }
         else
           { :conditions => ['deleted_at IS NULL OR deleted_at > ?', Time.now.utc] }
         end
       }
+      
+      def self.not_deleted
+        deleted(false)
+      end
     end
   end
 end

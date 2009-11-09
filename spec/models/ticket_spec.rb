@@ -63,11 +63,152 @@ describe Ticket do
   end
   
   describe "close" do
+    it "should be open" do
+      Factory(:ticket).should be_open
+    end
+    
     it "should close" do
       ticket = Factory(:ticket)
-      ticket.should be_open
-      ticket.close
+      ticket.close!
+      ticket.reload
       ticket.should be_closed
     end
   end
+
+  describe "archivable" do
+    it "should not be archived" do
+      Factory(:ticket).should_not be_archived
+    end
+    
+    it "should archive" do
+      ticket = Factory(:ticket)
+      ticket.archive!
+      ticket.reload
+      ticket.should be_archived
+    end
+    
+    it "should be archived" do
+      Factory(:ticket, :archived_at => Time.now - 1.day).should be_archived
+    end
+    
+    it "should unarchive" do
+      ticket = Factory(:ticket, :archived_at => Time.now - 1.day)
+      ticket.unarchive!
+      ticket.reload
+      ticket.should_not be_archived
+    end
+    
+    it "should find archived" do
+      ticket_1 = Factory(:ticket)
+      ticket_2 = Factory(:ticket, :archived_at => Time.now - 1.day)
+      Ticket.archived.should == [ticket_2]
+    end
+    
+    it "should find not archived" do
+      ticket_1 = Factory(:ticket)
+      ticket_2 = Factory(:ticket, :archived_at => Time.now - 1.day)
+      Ticket.not_archived.should == [ticket_1]
+    end
+    
+    it "should set archived" do
+      ticket = Factory(:ticket)
+      ticket.archived = true
+      ticket.should be_archived
+    end
+    
+    it "should get archived" do
+      Factory(:ticket, :archived_at => Time.now - 1.day).archived.should == true
+    end
+  end
+  
+  describe "publishable" do
+    it "should not be published" do
+      Factory(:ticket).should_not be_published
+    end
+    
+    it "should publish" do
+      ticket = Factory(:ticket)
+      ticket.publish!
+      ticket.reload
+      ticket.should be_published
+    end
+    
+    it "should be published" do
+      Factory(:ticket, :published_at => Time.now - 1.day).should be_published
+    end
+    
+    it "should unpublish" do
+      ticket = Factory(:ticket, :published_at => Time.now - 1.day)
+      ticket.unpublish!
+      ticket.reload
+      ticket.should_not be_published
+    end
+    
+    it "should find published" do
+      ticket_1 = Factory(:ticket)
+      ticket_2 = Factory(:ticket, :published_at => Time.now - 1.day)
+      Ticket.published.should == [ticket_2]
+    end
+    
+    it "should find unpublished" do
+      ticket_1 = Factory(:ticket)
+      ticket_2 = Factory(:ticket, :published_at => Time.now - 1.day)
+      Ticket.unpublished.should == [ticket_1]
+    end
+    
+    it "should set published" do
+      ticket = Factory(:ticket)
+      ticket.published = true
+      ticket.should be_published
+    end
+    
+    it "should get published" do
+      Factory(:ticket, :published_at => Time.now - 1.day).published.should == true
+    end
+  end
+  
+  describe "recyclable" do
+    it "should not be deleted" do
+      Factory(:ticket).should_not be_deleted
+    end
+    
+    it "should trash" do
+      ticket = Factory(:ticket)
+      ticket.trash!
+      ticket.reload
+      ticket.should be_deleted
+    end
+    
+    it "should destroy after second trash or remove" do
+      ticket = Factory(:ticket)
+      ticket.destroy_or_trash!
+      ticket.reload
+      ticket.should be_deleted
+      ticket.destroy_or_trash!
+      Ticket.exists?(ticket.id).should be_false
+    end    
+    
+    it "should be deleted" do
+      Factory(:ticket, :deleted_at => Time.now - 1.day).should be_deleted
+    end
+    
+    it "should recycle" do
+      ticket = Factory(:ticket, :deleted_at => Time.now - 1.day)
+      ticket.recycle!
+      ticket.reload
+      ticket.should_not be_deleted
+    end
+    
+    it "should find deleted" do
+      ticket_1 = Factory(:ticket)
+      ticket_2 = Factory(:ticket, :deleted_at => Time.now - 1.day)
+      Ticket.deleted.should == [ticket_2]
+    end
+    
+    it "should find not deleted" do
+      ticket_1 = Factory(:ticket)
+      ticket_2 = Factory(:ticket, :deleted_at => Time.now - 1.day)
+      Ticket.not_deleted.should == [ticket_1]
+    end
+  end  
 end

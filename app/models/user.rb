@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     watches.find_by_ticket_id(ticket.id)
   end
 
+  def watching?(ticket)
+    watch_of(ticket)
+  end
+
   def watch!(ticket)
     watches.find_or_create_by_ticket_id(ticket.id)
   end  

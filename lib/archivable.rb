@@ -1,41 +1,61 @@
 module Archivable
+  TRUE_VALUES = ["true", true, "1", 1] unless const_defined?(:TRUE_VALUES)
+  
   def self.included(base)
     base.extend(ClassMethods)
   end
   
   module ClassMethods
     def archivable(options = {})
-      define_method "archived?" do
-        !!send(:archived)
-      end
-
-      define_method "archived" do
-        send(:archived_at) && send(:archived_at) <= Time.now
-      end
-
-      define_method "archived=" do |archived|
-        if ["true", true, "1", 1].include?(archived)
-          write_attribute(:archived_at, Time.now.utc) unless send(:archived?)
-        else
-          write_attribute(:archived_at, nil) if send(:archived?)
+      class_eval do
+        def archived?
+          !!archived
         end
-      end
-      
-      define_method "archive!" do
-        send(:update_attribute, :archived_at, Time.now.utc) unless send(:archived?)
-      end
 
-      define_method "unarchive!" do
-        send(:update_attribute, :archived_at, nil) if send(:archived?)
+        def archived
+          archived_at && archived_at <= Time.now
+        end
+
+        def archived=(boolean)
+          if ["true", true, "1", 1].include?(boolean)
+            archive
+          else
+            unarchive
+          end
+        end
+        
+        def archive
+          self.archived_at = Time.now.utc unless archived?
+        end
+        
+        def unarchive
+          self.archived_at = nil
+        end
+      
+        def archive!
+          unless archived?
+            archive
+            save(false)
+          end
+        end
+
+        def unarchive!
+          unarchive
+          save(false)
+        end
       end
 
       named_scope :archived, lambda { |*args|
-        if args.first.nil? || ["true", true, "1", 1].include?(args.first)
+        if args.first.nil? || TRUE_VALUES.include?(args.first)
           { :conditions => ['archived_at IS NOT NULL AND archived_at <= ?', Time.now.utc] }
         else
           { :conditions => ['archived_at IS NULL OR archived_at > ?', Time.now.utc] }
         end
       }
+      
+      def not_archived
+        archived(false)
+      end
     end
   end
 end

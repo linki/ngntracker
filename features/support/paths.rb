@@ -17,6 +17,12 @@ module NavigationHelpers
       users_path
     when /the categories page/
       categories_path
+    when /the recycle bin/
+      deleted_tickets_path
+    when /the archive/
+      archived_tickets_path
+    when /my watch list/
+      watched_tickets_path
       
     # Add more mappings here.
     # Here is a more fancy example:

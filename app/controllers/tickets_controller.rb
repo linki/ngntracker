@@ -2,7 +2,7 @@ class TicketsController < ApplicationController
   before_filter :login_required, :except => [:new, :create]
   
   def index
-    @tickets = Ticket.visible_for(@current_user).recent.search(params)
+    @tickets = Ticket.active.visible_for(@current_user).recent.search(params)
   end
   
   def show
@@ -51,8 +51,23 @@ class TicketsController < ApplicationController
   def destroy
     @ticket = Ticket.find(params[:id])
     @ticket.destroy_or_trash!
-    flash[:notice] = "Successfully destroyed ticket."
+    flash[:notice] = "Successfully deleted the ticket."
     redirect_to tickets_url
+  end
+
+  def archived
+    @tickets = Ticket.not_deleted.archived.visible_for(@current_user).recent.search(params)
+    render :action => 'index'
+  end
+  
+  def deleted
+    @tickets = Ticket.deleted.visible_for(@current_user).recent.search(params)
+    render :action => 'index'
+  end
+  
+  def watched
+    @tickets = @current_user.watched_tickets.visible_for(@current_user).recent.search(params)
+    render :action => 'index'
   end
 
   def close
@@ -65,7 +80,7 @@ class TicketsController < ApplicationController
   def archive
     @ticket = Ticket.find(params[:id])
     @ticket.archive!
-    flash[:notice] = "Successfully archived ticket."
+    flash[:notice] = "Successfully archived the ticket."
     redirect_to tickets_url
   end
 end

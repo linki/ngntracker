@@ -1,3 +1,10 @@
+Given /^#{capture_model} is logged in$/ do |model_name|
+  visit login_url
+  fill_in "Login", :with => model(model_name).login
+  fill_in "Password", :with => "secret"
+  click_button "Log in"
+end
+  
 Given /^I am logged in as "([^\"]*)" with the password "([^\"]*)"$/ do |login, password|
   visit login_url
   fill_in "Login", :with => login

@@ -52,5 +52,8 @@ require 'pickle/world'
 #   config.adapters = [:machinist]
 #   config.map 'I', 'myself', 'me', 'my', :to => 'user: "me"'
 # end
+Pickle.configure do |config|
+ config.map 'I', :to => 'user: "me"'
+end
 require 'pickle/path/world'
 require 'pickle/email/world'

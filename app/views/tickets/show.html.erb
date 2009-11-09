@@ -2,7 +2,14 @@
 
 <div id="ticket">
   <p>
+    <% if @watch = @current_user.watching?(@ticket) %>
+      <%= link_to "Unwatch Ticket", watch_path(@watch), :confirm => 'Are you sure?', :method => :delete %>
+    <% else %>
+      <%= link_to "Watch Ticket", ticket_watches_path(@ticket), :method => :post %>
+    <% end %>
     <%= link_to "Close Ticket", close_ticket_path(@ticket), :method => :put %>
+    <%= link_to "Archive Ticket", archive_ticket_path(@ticket), :method => :put %>    
+    <%= link_to "Delete Ticket", @ticket, :confirm => 'Are you sure?', :method => :delete %>
   </p>
   
   <p>
@@ -66,10 +73,8 @@
 
   <div class="actions">
     <p>
-      <%= link_to "Back", tickets_path %> |
-      <%= link_to "Edit", edit_ticket_path(@ticket) %> |
-      <%= link_to "Archive", archive_ticket_path(@ticket), :confirm => 'Are you sure?', :method => :put %> |
-      <%= link_to "Destroy", @ticket, :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to "Back to list", tickets_path %> |
+      <%= link_to "Edit", edit_ticket_path(@ticket) %>
     </p>
   </div>
 </div>

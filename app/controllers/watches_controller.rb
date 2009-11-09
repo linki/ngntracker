@@ -4,7 +4,7 @@ class WatchesController < ApplicationController
   
   def create
     if @current_user.watch!(@ticket)
-      flash[:notice] = "Successfully created watch."
+      flash[:notice] = "You are now watching the ticket."
     else
       flash[:error] = "Could not create watch."
     end
@@ -14,7 +14,7 @@ class WatchesController < ApplicationController
   def destroy
     @watch = @current_user.watches.find(params[:id])
     @watch.destroy
-    flash[:notice] = "Successfully destroyed watch."
+    flash[:notice] = "You are no longer watching the ticket."
     redirect_to @watch.ticket
   end
   
