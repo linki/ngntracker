@@ -13,6 +13,13 @@ Feature: Archive ticket
     Then I should see "Successfully archived the ticket"
     And the ticket should be archived
     
+  Scenario: unarchive a ticket
+    Given a ticket exists with archived_at: "2000-01-01"
+    When I go to that ticket's page
+    And I follow "Unarchive Ticket"
+    Then I should see "Successfully unarchived the ticket"
+    And the ticket should not be archived
+    
   Scenario: Don't show archived ticket in list
     Given a ticket exists with name: "Fehler auf der Plattform", archived_at: "2000-01-01", published_at: "2000-01-01"
     When I go to the tickets page

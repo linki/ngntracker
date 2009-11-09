@@ -17,11 +17,7 @@ module Publishable
         end
 
         def published=(boolean)
-          if ["true", true, "1", 1].include?(boolean)
-            publish
-          else
-            unpublish
-          end
+          TRUE_VALUES.include?(boolean) ? publish : unpublish
         end
         
         def publish
@@ -47,9 +43,9 @@ module Publishable
       
       named_scope :published, lambda { |*args|
         if args.first.nil? || TRUE_VALUES.include?(args.first)
-          { :conditions => ['published_at IS NOT NULL AND published_at <= ?', Time.now.utc] }
+          { :conditions => ["#{quoted_table_name}.`published_at` IS NOT NULL AND #{quoted_table_name}.`published_at` <= ?", Time.now.utc] }
         else
-          { :conditions => ['published_at IS NULL OR published_at > ?', Time.now.utc] }
+          { :conditions => ["#{quoted_table_name}.`published_at` IS NULL OR #{quoted_table_name}.`published_at` > ?", Time.now.utc] }
         end
       }
       

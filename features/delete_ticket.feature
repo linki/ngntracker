@@ -12,6 +12,13 @@ Feature: Delete ticket
     And I follow "Delete Ticket"
     Then I should see "Successfully deleted the ticket."
     And the ticket should be deleted
+    
+  Scenario: recycle a ticket
+    Given a ticket exists with deleted_at: "2000-01-01"
+    When I go to that ticket's page
+    And I follow "Recycle Ticket"
+    Then I should see "Successfully recycled the ticket"
+    And the ticket should not be deleted
 
   Scenario: don't show deleted ticket in list
     Given a ticket exists with name: "Fehler auf der Plattform", deleted_at: "2000-01-01", published_at: "2000-01-01"

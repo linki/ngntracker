@@ -8,7 +8,6 @@ class TicketsController < ApplicationController
   def show
     @ticket  = Ticket.find(params[:id])
     @comment = Comment.new
-    @watch = @current_user.watch_of(@ticket)
     @visit = @current_user.visit_of(@ticket)
     @current_user.visit!(@ticket)
   end
@@ -20,7 +19,7 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(params[:ticket])
     if logged_in?
-      @ticket.user = current_user
+      @ticket.user = @current_user
     else
       # make that better
       @ticket.user = User.create!(:name => params[:ticket][:user][:email].split('@').first.titleize.gsub('.', ' '), :login => params[:ticket][:user][:email].split('@').first, :email => params[:ticket][:user][:email], :password => 'testtest', :password_confirmation => 'testtest') unless params[:ticket][:user][:email].blank?
@@ -82,5 +81,19 @@ class TicketsController < ApplicationController
     @ticket.archive!
     flash[:notice] = "Successfully archived the ticket."
     redirect_to tickets_url
+  end
+
+  def unarchive
+    @ticket = Ticket.find(params[:id])
+    @ticket.unarchive!
+    flash[:notice] = "Successfully unarchived the ticket."
+    redirect_to @ticket
+  end
+  
+  def recycle
+    @ticket = Ticket.find(params[:id])
+    @ticket.recycle!
+    flash[:notice] = "Successfully recycled the ticket."
+    redirect_to @ticket
   end
 end

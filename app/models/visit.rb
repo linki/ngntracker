@@ -1,6 +1,4 @@
 class Visit < ActiveRecord::Base
-  attr_accessible :ticket
-  
   validates_presence_of :user_id, :ticket_id
   
   belongs_to :user

@@ -27,9 +27,9 @@ module Recyclable
       
       named_scope :deleted, lambda { |*args|
         if args.first.nil? || TRUE_VALUES.include?(args.first)
-          { :conditions => ['deleted_at IS NOT NULL AND deleted_at <= ?', Time.now.utc] }
+          { :conditions => ["#{quoted_table_name}.`deleted_at` IS NOT NULL AND #{quoted_table_name}.`deleted_at` <= ?", Time.now.utc] }
         else
-          { :conditions => ['deleted_at IS NULL OR deleted_at > ?', Time.now.utc] }
+          { :conditions => ["#{quoted_table_name}.`deleted_at` IS NULL OR #{quoted_table_name}.`deleted_at` > ?", Time.now.utc] }
         end
       }
       

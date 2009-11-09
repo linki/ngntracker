@@ -17,11 +17,7 @@ module Archivable
         end
 
         def archived=(boolean)
-          if ["true", true, "1", 1].include?(boolean)
-            archive
-          else
-            unarchive
-          end
+          TRUE_VALUES.include?(boolean) ? archive : unarchive
         end
         
         def archive
@@ -47,9 +43,9 @@ module Archivable
 
       named_scope :archived, lambda { |*args|
         if args.first.nil? || TRUE_VALUES.include?(args.first)
-          { :conditions => ['archived_at IS NOT NULL AND archived_at <= ?', Time.now.utc] }
+          { :conditions => ["#{quoted_table_name}.`archived_at` IS NOT NULL AND #{quoted_table_name}.`archived_at` <= ?", Time.now.utc] }
         else
-          { :conditions => ['archived_at IS NULL OR archived_at > ?', Time.now.utc] }
+          { :conditions => ["#{quoted_table_name}.`archived_at` IS NULL OR #{quoted_table_name}.`archived_at` > ?", Time.now.utc] }
         end
       }
       

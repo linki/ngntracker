@@ -4,8 +4,7 @@ module GetterFor
   end
   
   module ClassMethods
-    def getter_for(*args)
-      attributes = args.extract_options!      
+    def getter_for(attributes = {})
       attributes.each do |model, methods|
         methods = [methods] unless methods.is_a?(Array)
         methods.each do |method|
@@ -16,8 +15,7 @@ module GetterFor
       end
     end
     
-    def setter_for(*args)
-      attributes = args.extract_options!
+    def setter_for(attributes = {})
       attributes.each do |model, methods|
         methods = [methods] unless methods.is_a?(Array)
         methods.each do |method|
@@ -28,9 +26,9 @@ module GetterFor
       end
     end
     
-    def getter_and_setter_for(*args)
-      getter_for(*args)
-      setter_for(*args)
+    def getter_and_setter_for(attributes = {})
+      getter_for(attributes)
+      setter_for(attributes)
     end
   end
 end

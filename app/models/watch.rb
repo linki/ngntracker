@@ -1,6 +1,4 @@
 class Watch < ActiveRecord::Base
-  attr_accessible :user_id, :ticket_id
-  
   validates_presence_of :user_id, :ticket_id
   
   belongs_to :user

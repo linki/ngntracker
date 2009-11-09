@@ -3,13 +3,21 @@
 <div id="ticket">
   <p>
     <% if @watch = @current_user.watching?(@ticket) %>
-      <%= link_to "Unwatch Ticket", watch_path(@watch), :confirm => 'Are you sure?', :method => :delete %>
+      You are watching this ticket. <%= link_to "Unwatch Ticket", @watch, :confirm => 'Are you sure?', :method => :delete %>
     <% else %>
       <%= link_to "Watch Ticket", ticket_watches_path(@ticket), :method => :post %>
     <% end %>
     <%= link_to "Close Ticket", close_ticket_path(@ticket), :method => :put %>
-    <%= link_to "Archive Ticket", archive_ticket_path(@ticket), :method => :put %>    
-    <%= link_to "Delete Ticket", @ticket, :confirm => 'Are you sure?', :method => :delete %>
+    <% if @ticket.archived? %>
+      <%= link_to "Unarchive Ticket", unarchive_ticket_path(@ticket), :method => :put %>
+    <% else %>
+      <%= link_to "Archive Ticket", archive_ticket_path(@ticket), :method => :put %>    
+    <% end %>
+    <% if @ticket.deleted? %>
+      <%= link_to "Recycle Ticket", recycle_ticket_path(@ticket), :method => :put %>
+    <% else %>
+      <%= link_to "Delete Ticket", @ticket, :confirm => 'Are you sure?', :method => :delete %>
+    <% end %>
   </p>
   
   <p>
@@ -61,7 +69,7 @@
     <ul>
     <% @ticket.audits.reverse.each do |audit| %>
       <% if audit.action == 'create' %>
-        <li><%= time audit.created_at %>: <%= audit.user.name %> created the ticket.</li>
+        <li><%= time audit.created_at %>: <%= audit.user.name if audit.user %> created the ticket.</li>
       <% end %>
       <% if audit.action == 'update' %>
         <% audit.changes.each do |attribute, change| %>
@@ -70,14 +78,6 @@
       <% end %>
     <% end %>
     </ul>
-  </p>
-  
-  <p>
-    <% if @watch %>
-      You are watching this ticket. <%= link_to "Unwatch", @watch, :confirm => 'Are you sure?', :method => :delete %>
-    <% else %>
-      <%= link_to "Watch this Ticket", ticket_watches_path(@ticket), :method => :post %>
-    <% end %>
   </p>
   
   <h2>Comments</h2>
