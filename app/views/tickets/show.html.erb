@@ -58,6 +58,21 @@
   </p>
   
   <p>
+    <ul>
+    <% @ticket.audits.reverse.each do |audit| %>
+      <% if audit.action == 'create' %>
+        <li><%= time audit.created_at %>: <%= audit.user.name %> created the ticket.</li>
+      <% end %>
+      <% if audit.action == 'update' %>
+        <% audit.changes.each do |attribute, change| %>
+          <li><%= time audit.created_at %>: <%= audit.user.name %> changed <%= attribute %> from "<%= change.first %>" to "<%= change.last %>".</li>
+        <% end %>
+      <% end %>
+    <% end %>
+    </ul>
+  </p>
+  
+  <p>
     <% if @watch %>
       You are watching this ticket. <%= link_to "Unwatch", @watch, :confirm => 'Are you sure?', :method => :delete %>
     <% else %>
