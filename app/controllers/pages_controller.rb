@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_filter :login_required
-  before_filter :find_ticket, :only => [:index, :new, :create]  
+  # before_filter :find_ticket, :only => [:index, :new, :create]  
   
   def index
     @pages = Page.all
@@ -22,7 +22,7 @@ class PagesController < ApplicationController
     @page.ticket = @ticket
     @page.user   = @current_user
     if @page.save
-      flash[:notice] = "Successfully created page."
+      flash[:notice] = "Successfully created the page."
       redirect_to @page
     else
       render :action => 'new'

@@ -2,10 +2,10 @@
 
 <div id="ticket">
   <p>
-    <% if @watch = @current_user.watching?(@ticket) %>
-      You are watching this ticket. <%= link_to "Unwatch Ticket", @watch, :confirm => 'Are you sure?', :method => :delete %>
+    <% if @current_user.watching?(@ticket) %>
+      You are watching this ticket. <%= link_to "Unwatch Ticket", [@ticket, :watch], :confirm => 'Are you sure?', :method => :delete %>
     <% else %>
-      <%= link_to "Watch Ticket", ticket_watches_path(@ticket), :method => :post %>
+      <%= link_to "Watch Ticket", ticket_watch_path(@ticket), :method => :post %>
     <% end %>
     <%= link_to "Close Ticket", close_ticket_path(@ticket), :method => :put %>
     <% if @ticket.archived? %>

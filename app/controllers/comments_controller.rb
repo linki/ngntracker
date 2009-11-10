@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
     @comment.ticket = @ticket
     @comment.user   = @current_user
     if @comment.save
-      flash[:notice] = "Successfully created comment."
+      flash[:notice] = "Successfully created your comment."
       redirect_to @comment.ticket
     else
       render :action => 'new'

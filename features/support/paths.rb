@@ -11,12 +11,6 @@ module NavigationHelpers
     when /the home\s?page/
       '/'
     
-    when /tickets page/
-      tickets_path
-    when /users page/
-      users_path
-    when /the categories page/
-      categories_path
     when /the recycle bin/
       deleted_tickets_path
     when /the archive/

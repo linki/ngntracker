@@ -4,13 +4,14 @@
 
 <% semantic_form_for @user do |f| %>
   <% f.inputs do %>
-    <%= f.input :name %>  
-    <%= f.input :login %>
+    <%= f.input :perishable_token, :label => "Registration Token" %>  
     <%= f.input :email %>
-    <%= f.input :password %>        
-    <%= f.input :password_confirmation %>
+    <%= f.input :login %>
+    <%= f.input :name %>    
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>    
   <% end %>
   <% f.buttons do %>
-    <%= f.commit_button 'Sign Up' %>
+    <%= f.commit_button 'Submit' %>
   <% end %>  
 <% end %>

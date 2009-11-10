@@ -1,6 +1,6 @@
 class WatchesController < ApplicationController
   before_filter :login_required
-  before_filter :find_ticket, :only => :create
+  before_filter :find_ticket
   
   def create
     if @current_user.watch!(@ticket)
@@ -12,7 +12,7 @@ class WatchesController < ApplicationController
   end
   
   def destroy
-    @watch = @current_user.watches.find(params[:id])
+    @watch = @current_user.watches.find_by_ticket_id!(@ticket)
     @watch.destroy
     flash[:notice] = "You are no longer watching the ticket."
     redirect_to @watch.ticket

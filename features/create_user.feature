@@ -2,9 +2,11 @@ Feature: Create User
   In order to allow users to see public tickets
   As an admin
   I want to create a new user
+  
+  Background:
+    Given I am logged in
 
   Scenario: Create a valid User
-    Given no users exist
     When I go to the users page
     And I follow "Create User"
     And I fill in the following:

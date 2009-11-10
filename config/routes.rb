@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tickets, :member => { :close => :put, :archive => :put, :unarchive => :put, :recycle => :put }, :collection => { :archived => :get, :deleted => :get, :watched => :get } do |tickets|
     tickets.resources :comments, :shallow => true
     tickets.resources :pages, :shallow => true
-    tickets.resources :watches, :only => [:create, :destroy], :shallow => true
+    tickets.resource :watch, :only => [:create, :destroy]
   end
 
   map.resources :pages
