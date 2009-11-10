@@ -1,4 +1,4 @@
-Given /^I have no users in the database$/ do
+Given /^no users exist$/ do
   User.delete_all
 end
 
