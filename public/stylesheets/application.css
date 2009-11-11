@@ -1,86 +1,912 @@
-body {
-  background-color: #4B7399;
-  font-family: Verdana, Helvetica, Arial;
-  font-size: 14px;
-}
-
-a img {
-  border: none;
-}
-
 a {
-  color: #0000FF;
+  color: #4183C4;
+  text-decoration: none;
 }
 
-.clear {
-  clear: both;
-  height: 0;
-  overflow: hidden;
+.box {
+  border: 1px solid #D8D8D8;
+}
+  
+#tickets, #users {
+  border-left:1px solid #D8D8D8;
+  border-right:1px solid #D8D8D8;
+  border-top:1px solid #D8D8D8;
+  width:100%;  
+  /*font-family:Monaco,"Courier New",monospace;
+  font-size:90%;*/
 }
 
-#container {
-  width: 75%;
-  margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
-  border: solid 1px black;
-  margin-top: 20px;
+#tickets th, #messages th, #users th {
+  background-color:#EAEAEA;
+  border-bottom:1px solid #D8D8D8;
+  color:#999999;
+  padding:0.5em 0.3em;
+  text-align:left;
 }
 
-#flash_notice, #flash_error {
-  padding: 5px 8px;
-  margin: 10px 0;
+#tickets td, #messages td, #users td {
+  background:#F8F8F8 url(/../images/row_bg.png) repeat-x scroll 0 100%;
+  border-bottom:1px solid #E1E1E1;
+  color:#484848;
+  padding:0.5em 0.3em;
 }
 
-#flash_notice {
-  background-color: #CFC;
-  border: solid 1px #6C6;
+p + p {
+  text-indent: 0;
 }
 
-#flash_error {
-  background-color: #FCC;
-  border: solid 1px #C66;
+label {font-size:11px; font-weight:bold; color:#666;}
+dl {clear:both;}
+dt {float:left; text-align:right; width:120px; line-height:25px; margin:0 10px 10px 0;}
+
+.recent_ticket, .recent_user {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
+
+.new {
+  color: #CF0000;
+  font-weight: bold;
+}
+
+.process {
+  color: #CF8E13;
+  font-style: italic;
+}
+
+.complete {
+  color: #20BC00;
+}
+
+.archived {
+  color: #66A;
+}
+
+/* embeds the openid image in the text field */
+input#user_openid_identifier, input#user_session_openid_identifier {
+  background: url(http://openid.net/images/login-bg.gif) no-repeat;
+  background-color: #fff;
+  background-position: 0 50%;
+  color: #000;
+  padding-left: 18px;
+}
+
+#ticket .header {
+  background-color:#F0F0F0;
+  border:1px solid #D8D8D8;
+  padding:0.1em 0.5em;
+}
+
 
 .fieldWithErrors {
-  display: inline;
-}
+  display: inline; }
 
 #errorExplanation {
   width: 400px;
   border: 2px solid #CF0000;
-  padding: 0px;
+  padding: 0;
   padding-bottom: 12px;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; }
+  #errorExplanation h2 {
+    text-align: left;
+    padding: 5px 5px 5px 15px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: #c00;
+    color: #fff; }
+  #errorExplanation p {
+    color: #333;
+    margin-bottom: 0;
+    padding: 8px; }
+  #errorExplanation ul {
+    margin: 2px 24px; }
+    #errorExplanation ul li {
+      font-size: 12px;
+      list-style: disc; }
+
+.page_links a, .page_links span {
+  padding: 0 0.3em;
 }
 
-#errorExplanation h2 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  margin: 0;
-  background-color: #c00;
-  color: #fff;
+#header {
+background:#FCFCFC; /* url(/../images/header_bg.png) repeat-x scroll 0 100%;*/
+
+  margin-top: 1em;
 }
 
-#errorExplanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 8px;
+.logo {
+  margin-top: 1.6em;
 }
 
-#errorExplanation ul {
-  margin: 2px 24px;
+#header .topsearch {
+  
+color:#BBBBBB;
+
+margin:2.05em 0 0 1em;
+width:19em;
 }
 
-#errorExplanation ul li {
-  font-size: 12px;
-  list-style: disc;
+
+#header .userbox {
+background:#E5ECF9; /*#EAF2F5;*/
+border: 1px solid #D8D8D8;
+color:#AAAACC;
+
+margin:1.6em 0;
+padding: 1.5em;
 }
 
-#user_status {
+
+
+#header .userbox .gravatar {
+  float:left;
+}
+
+#header .userbox .gravatar img {
+  background-color:white;
+  border:1px solid #D0D0D0;
+  margin-right:0.7em;
+  padding:2px;
+}
+
+#header .userbox .top {
+overflow:hidden;
+}
+
+#header .userbox .top .name {
+  float:left;
+  font-weight:bold;
+  overflow:hidden;
+  width:10em;
+}
+
+#header .userbox .top .links {
+float:right;
+font-size:85%;
+margin-top:0.2em;
+text-align:right;
+}
+
+#header .userbox .bottom {
+overflow:hidden;
+}
+
+#header .userbox .bottom .select {
+float:right;
+margin-top:0.5em;
+}
+
+#header .userbox .inbox {
+background:transparent url(/../images/message.png) no-repeat scroll 0 0.1em;
+float:left;
+margin-top:0.7em;
+}
+
+#header .userbox .inbox a {
+display:block;
+padding-left:20px;
+}
+
+#menu {
+background:#FCFCFC; /*#EAF2F5; /* url(/images/modules/repo_menu/bg.png) repeat-x scroll 0 0;*/
+overflow:hidden;
+text-align:left;
+
+}
+
+#menu ul {
+background:#F4F4F4;
+}
+
+#menu ul li {
+background:#F4F4F4 url(/../images/tab.png) repeat-x scroll 0 0;
+border-right:2px solid #EEEEEE;
+float:left;
+height:1.6em;
+list-style-type:none;
+padding-top:0.4em;
+position:relative;
+}
+
+#menu ul li:hover {
+background:#F4F4F4 url(/../images/tab_hover.png) repeat-x scroll 0 0;
+}
+
+#menu ul li.admin a {
+padding:1em 0.9em 0.3em;
+}
+
+#menu ul li a {
+color:#979797;
+font-size:110%;
+padding:1em 0.9em 0.3em;
+}
+
+#menu ul li.admin a {
+  padding:1em 0.6em 0.3em;
+}
+
+#menu ul li a:hover {
+color:black;
+}
+
+#menu ul li.active {
+background:white url(../images/tab_active.png) repeat-x scroll 0 0;
+}
+
+#repo_sub_menu {
+background:#DADADA; /* url(/images/modules/repo_sub_menu/bg.png) repeat-x scroll 0 100%; */
+height:2.099em;
+line-height:1.5;
+margin-bottom:1.5em;
+}
+
+#repo_sub_menu ul {
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+}
+
+#repo_sub_menu li {
+float:left;
+position:relative;
+}
+
+#repo_sub_menu a {
+color:black;
+margin-left:2em;
+padding:0.3em;
+}
+
+#repo_sub_menu a.active {
+background-color:#EEEEEE;
+}
+
+
+
+
+
+
+#repos .repo .title {
+overflow:hidden;
+}
+
+#repos .repo .title .path {
+float:left;
+font-size:140%;
+}
+#repos .repo .title .path .button {
+margin-left:0.25em;
+vertical-align:-12%;
+}
+
+#repos .repo .title .security {
+float:right;
+font-weight:bold;
+padding-top:0.5em;
+text-align:right;
+}
+
+#repos .repo .title .flexipill table, #repos .repo .title .flexipill table tr, #repos .repo .title .flexipill table tr td {
+margin:0;
+padding:0;
+}
+
+#repos .repo .title .flexipill {
+float:right;
+margin-right:0.5em;
+padding-top:0.3em;
+}
+#repos .repo .title .flexipill a {
+color:black;
+}
+table {
+font-size:inherit;
+}
+#repos .repo .title .flexipill .middle {
+background:transparent url(/../images/middle.png) repeat-x scroll 0 0;
+padding:0 0 0 0.3em;
+}
+
+#repos .repo .title .flexipill .middle span {
+font-size:95%;
+position:relative;
+top:-0.2em;
+
+}
+
+img {
+border:0 none;
+}
+
+#repos .repo .meta {
+margin:0.2em 0 0;
+overflow:hidden;
+}
+
+#repos .repo .meta table {
+float:left;
+max-width:34em;
+margin-bottom: 0;
+}
+
+#repos .repo .meta table td.label {
+color:#888888;
+padding-right:0.25em;
+vertical-align:bottom;
+}
+
+#repos .repo .pledgie {
+float:right;
+max-width:20em;
+}
+
+
+.css1 { font-size: 1.0em; }
+.css2 { font-size: 1.2em; }
+.css3 { font-size: 1.4em; }
+.css4 { font-size: 1.6em; }
+
+#commit {
+overflow:hidden;
+}
+
+#commit .group {
+border-top:1px solid #BEDCE7;
+}
+
+#commit .envelope {
+background:#EAF2F5 url(/../images/bg_gradient.gif) repeat-x scroll 0 100%;
+border-bottom:1px solid #BEDCE7;
+border-left:1px solid #BEDCE7;
+border-right:1px solid #BEDCE7;
+overflow:hidden;
+padding:0 0.7em 0.7em;
+}
+
+#commit .human {
+float:left;
+padding-top:0.7em;
+width:40em;
+}
+
+#commit .human .actor {
+clear:left;
+margin-top:0.75em;
+}
+
+#commit .human .actor .gravatar {
+background-color:white;
+border:1px solid #D0D0D0;
+float:left;
+margin-right:0.7em;
+padding:2px;
+}
+
+#commit .human .actor .name {
+line-height:1.5em;
+}
+
+#commit .human .actor .name span {
+color:#888888;
+font-size:90%;
+}
+
+#commit .human .actor .date {
+color:#888888;
+font-size:90%;
+line-height:1em;
+}
+
+#commit .machine {
+border-left:1px solid #BEDCE7;
+color:#808080;
+float:right;
+font-family:Monaco,"Courier New",monospace;
+font-size:0.85em;
+line-height:1.5em;
+padding:0.7em 0 0.7em 0.7em;
+width:30em;
+}
+
+pre, code {
+-x-system-font:none;
+font-family:Monaco,"Courier New",monospace;
+font-size:115%;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:normal;
+}
+
+#commit .human .message {
+font-family:Monaco,"Courier New",monospace;
+font-size:80%;
+}
+
+#readme.announce {
+margin:1em 0;
+}
+#readme {
+-x-system-font:none;
+font-family:helvetica,arial,clean,sans-serif;
+font-size:13.34px;
+font-size-adjust:none;
+font-stretch:normal;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:normal;
+}
+
+#readme span.name {
+font-size:140%;
+padding:0.8em 0;
+}
+
+#readme.announce div.plain, #readme.announce div.wikistyle {
+border:1px solid #E9E9E9;
+}
+#readme div.plain, #readme div.wikistyle {
+background-color:#F8F8F8;
+padding:0.7em;
+}
+
+.wikistyle h1:first-child {
+border-top:medium none !important;
+margin-top:0 !important;
+padding-top:0.25em !important;
+}
+.wikistyle h1 {
+border-top:4px solid #AAAAAA !important;
+font-size:170% !important;
+margin-top:1.5em !important;
+padding-top:0.5em !important;
+}
+.wikistyle h1, h2, h3, h4, h5, h6 {
+border:0 none !important;
+}
+.wikistyle p {
+line-height:1.5em !important;
+margin:1em 0 !important;
+}
+
+.wikistyle h2 {
+border-top:4px solid #E0E0E0 !important;
+font-size:150% !important;
+margin-top:1.5em !important;
+padding-top:0.5em !important;
+}
+
+.wikistyle pre {
+background-color:#F8F8FF !important;
+border:1px solid #DEDEDE !important;
+color:#444444 !important;
+font-size:90% !important;
+line-height:1.5em !important;
+margin:1em 0 !important;
+overflow:auto !important;
+padding:0.5em !important;
+}
+
+.wikistyle code {
+background-color:#F8F8FF !important;
+border:1px solid #DEDEDE !important;
+color:#444444 !important;
+font-size:90% !important;
+padding:0 0.2em !important;
+}
+
+.announcement, #flash_notice, #flash_success, #flash_error {
+  overflow:hidden;
+  padding:0.2em 0.5em;
+}
+
+.announcement span, #flash_notice span, #flash_success span, #flash_error span {
+  display:block;
+  padding-left:20px;
+}
+
+.announcement {
+  background-color:#DEFFDD;
+  border:2px solid #20BC00;
+  
+}
+
+#flash_success, #flash_notice {
+  background:transparent url(/../images/icon_success.png) no-repeat scroll 0 0.1em;
+  background-color:#DEFFDD;
+  border:2px solid #20BC00;
+  margin-top: 1em;
+  
+}
+/*
+#flash_notice {
+  background:transparent url(/../images/icon_information.gif) no-repeat scroll 0 0.1em;
+  background-color: #FFF6BF;
+  border:2px solid #FFD324;
+}*/
+
+#flash_error {
+  background:transparent url(/../images/icon_warning.gif) no-repeat scroll 0 0.1em;  
+  background-color: #FCC;
+  border:2px solid #C66;
+  margin-top: 1em;
+}
+
+
+#hide_announcements {
   float: right;
-  font-size: 12px;
+}
+
+#comments .comments {
+  border: #AAA solid 1px;
+  background-color: #F3F3F3;
+  width: 40%;
+}
+
+#comments .comments hr {
+  width: 80%;
+    margin: 0 auto;
+
+    border-top: 1px solid #CCC; }
+#comments .comment {
+  margin: 15px 20px; }
+  #comments .comment .position, #comments .comment .name {
+    font-size: 12px;
+    font-weight: bold; }
+  #comments .comment .created_at {
+    font-size: 10px;
+    color: #666; }
+#comments .comment_content {
+  font-size: 12px; }
+  #comments .comment_content p {
+    margin: 8px 0; }
+
+#comments textarea  {
+  padding: 0;
+  height: 10em;
+  width: 40%;
+}
+
+
+#inbox {
+  overflow:hidden;
+}
+
+#inbox .actions {
+  margin-bottom:2em;
+}
+
+#inbox .compose {
+  border-bottom:1px solid #DDDDDD;
+  font-size:120%;
+  margin:0.3em 0 1em;
+  padding-bottom:0.5em;
+}
+
+#inbox .actions p img {
+  vertical-align:middle;
+}
+
+#inbox .boxes .new {
+  font-weight:bold;
+}
+
+#inbox .list {
+}
+
+#inbox h1 {
+  font-size:160%;
+  margin-bottom:0.5em;
+}
+
+#inbox .list h1 {
+  border-bottom:1px solid #AAAAAA;
+  margin:0;
+  padding-bottom:0.25em;
+}
+
+#inbox .list .message {
+  background:transparent url(/../images/read_message.png) no-repeat scroll 0.5em 1em;
+}
+
+#inbox .list .item {
+  border-bottom:1px solid #CCCCCC;
+  overflow:hidden;
+  padding:1em 0 0 2.3em;
+}
+
+#inbox .list .item .body {
+  overflow:hidden;
+  padding:0 0 1em;
+}
+
+#inbox .list .item .del {
+  float:right;
+  padding-right:0.5em;
+}
+
+#inbox .list .item .title {
+  font-weight:bold;
+  padding:0 0 0.25em;
+}
+
+#inbox .list .item .gravatar {
+  background-color:white;
+  border:1px solid #D0D0D0;
+  float:left;
+  margin-right:0.7em;
+  padding:2px;
+}
+
+#inbox .list .unread {
+  background-color:#EAF2F5 !important;
+}
+
+#inbox .list .unread.message {
+  background:transparent url(/../images/message.png) no-repeat scroll 0.5em 1em;
+}
+
+#inbox .list .item .details .message a.subject {
+  font-weight:bold;
+}
+
+#inbox .list .item .details .message a.body {
+  color:#23486B;
+}
+
+#inbox .write {
+}
+
+#inbox .write h1 {
+  border-bottom:1px solid #AAAAAA;
+  margin:0;
+  padding-bottom:0.25em;
+}
+
+#inbox .write form {
+  background-color:#EAF2F5;
+  border-bottom:1px solid #CCCCCC;
+  padding:0.5em 1em 1em;
+}
+
+#inbox .write .buttons-top {
+  margin-bottom:0.3em;
+}
+
+#inbox .write .buttons .send {
+  font-weight:bold;
+  padding:0 2em;
+}
+
+#inbox .write .buttons .cancel {
+  padding:0 1em;
+}
+
+#inbox .write .field {
+  margin:0.5em 0;
+  overflow:hidden;
+}
+
+#inbox .write label {
+  line-height:1.7em;
+  padding-right:0.3em;
+  text-align:right;
+  vertical-align:middle;
+  width:4em;
+}
+
+#inbox .write .field input {
+  border:1px solid #CCCCCC;
+  font-size:120%;
+  padding:0.2em;
+  width:39.3em;
+}
+
+#inbox .write textarea {
+  border:1px solid #CCCCCC;
+  font-size:110%;
+  padding:0.2em;
+  width:47em;
+}
+
+#inbox .write .submits {
+  margin-top:0.7em;
+  overflow:hidden;
+}
+
+#message .envelope h1 {
+border-bottom:1px solid #AAAAAA;
+margin:0;
+padding-bottom:0.25em;
+}
+
+#message .envelope .header {
+padding:0.75em 0 0 0.5em;
+}
+
+#message .envelope .header .gravatar {
+background-color:white;
+border:1px solid #D0D0D0;
+float:left;
+padding:2px;
+}
+
+#message .envelope .header .info {
+padding:0 0 0 3.5em;
+}
+
+#message .envelope .header .info .del {
+float:right;
+padding-right:0.5em;
+}
+
+#message .envelope .header .info .title {
+font-weight:bold;
+padding:0 0 0.25em;
+}
+
+#message .envelope .body {
+border-bottom:1px solid #CCCCCC;
+margin:0 0 1.3em 4em;
+padding:0 0 1em;
+}
+
+.wikistyle p {
+line-height:1.5em !important;
+margin:1em 0 !important;
+}
+
+#message .envelope .reply {
+margin:2em 0 0 4em;
+}
+
+#message .envelope .reply label {
+clear:right;
+color:#666666;
+display:block;
+font-size:110%;
+margin-top:1em;
+}
+
+#message .envelope .reply textarea {
+border:1px solid #8496BA;
+height:9em;
+margin-bottom:1em;
+width:99.8%;
+}
+
+#edit_user {
+overflow:hidden;
+}
+
+.editbox {
+background-color:#F8F8FF;
+border-left:1px solid #CCCCCC;
+border-right:1px solid #CCCCCC;
+border-top:1px solid #CCCCCC;
+margin-top:1.5em;
+}
+
+.editbox h1 {
+background-color:#EEEEEE;
+border-bottom:1px solid #CCCCCC;
+font-size:100%;
+overflow:hidden;
+padding:0.5em;
+}
+
+.editbox .body {
+border-bottom:1px solid #CCCCCC;
+padding:0 0.5em;
+}
+
+.editbox .body p {
+margin:0.5em 0;
+}
+
+#edit_user .user .emails ul {
+margin-top:0.5em;
+}
+
+#edit_user .user .emails .email {
+list-style-type:none;
+overflow:hidden;
+}
+
+#edit_user .user .emails .email img {
+background-color:white;
+border:1px solid #D0D0D0;
+float:left;
+margin-right:0.7em;
+padding:2px;
+}
+
+#edit_user .user .emails .email .address {
+font-weight:bold;
+line-height:40px;
+}
+
+.editbox .hint {
+border-top:1px solid #CCCCCC;
+color:#888888;
+font-style:italic;
+margin:0.3em 0;
+padding-top:0.5em;
+}
+
+#edit_user .user .emails .hint img {
+border:1px solid #DDDDDD;
+padding:1px;
+vertical-align:middle;
+}
+
+#edit_user .user .admin .body {
+padding:0.5em;
+}
+
+#edit_user .user .admin form {
+margin-bottom:0.25em;
+}
+
+#edit_user .user .admin form div.field {
+float:left;
+padding-bottom:0.5em;
+width:16em;
+}
+
+#edit_user .user .admin label {
+color:#888888;
+display:block;
+font-size:90%;
+margin-bottom:0.25em;
+}
+
+#edit_user .plan_box {
+background:#F2F2F2 none repeat scroll 0 0;
+border:1px solid #DDDDDD;
+padding:0.8em;
+}
+
+#edit_user .user .admin form div.submit {
+clear:both;
+}
+
+.standard_form {
+background-color:#EAF2F5;
+border:1px solid #DDDDDD;
+margin:auto 0;
+padding:2em 2em 1em;
+
+}
+
+.standard_form h1 {
+font-size:160%;
+margin-bottom:1em;
+}
+
+.standard_form form label, .standard_form form .label, label.standard {
+color:#666666;
+display:block;
+font-size:110%;
+margin:1em 0 0;
+}
+
+.standard_form form input.text {
+font-size:110%;
+}
+.standard_form form input.text, .standard_form form textarea {
+border:1px solid #888888;
+padding:5px;
+}
+input.text {
+padding:1px 0;
+}
+.standard_form form label a {
+font-size:90%;
 }

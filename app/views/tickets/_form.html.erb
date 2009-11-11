@@ -22,6 +22,9 @@
     <% end %>
   <% end %>
   <% f.buttons do %>
-    <%= f.commit_button %>
+    <button type="submit" class="button positive">
+      <%= tick_image %> Create Ticket
+    </button>
+    <% link_to "#{cross_image} Cancel", tickets_path, :class => "button negativ" %>
   <% end %>
 <% end %>

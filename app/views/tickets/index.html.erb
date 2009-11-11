@@ -8,7 +8,7 @@
 
 <table id="tickets">
   <tr>
-    <th>ID</th>    
+    <th>ID</th>
     <th>New</th>
     <th>Name</th>
     <th>Category</th>
@@ -25,9 +25,6 @@
       <td><%=h ticket.user_name %></td>
       <td><%=h ticket.assignee_name %></td>      
       <td><%= time ticket.updated_at %></td>
-      <td><%= link_to "Edit", edit_ticket_path(ticket) %></td>
-      <td><%= link_to "Archive", archive_ticket_path(ticket), :confirm => 'Are you sure?', :method => :put %></td>
-      <td><%= link_to "Destroy", ticket, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>

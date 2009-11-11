@@ -7,39 +7,136 @@
     <!--[if lt IE 8]>
       <%= stylesheet_link_tag 'blueprint/ie' %>
     <![endif]-->
-    <%= stylesheet_link_tag 'formtastic', 'application' %>
+    <%= stylesheet_link_tag 'blueprint/plugins/fancy-type/screen', 'blueprint/plugins/buttons/screen' %>
+    <%= stylesheet_link_tag 'pagination', 'formtastic', 'application' %>
     <%= yield(:head) %>
   </head>
   <body>
     <body>
-      <div id="container">
-        <%- flash.each do |name, msg| -%>
-          <%= content_tag :div, msg, :id => "flash_#{name}" %>
-        <%- end -%>
-        
-        <div id="user_status">
+      <div class="container">
+
+        <div id="header" class="span-24 last">
+
+          <div class="prepend-1 span-6">
+            <div class="logo">
+               <%= link_to image_tag('ngntracker.png'), "http://Settings.domain/" %>
+             </div>
+          </div>
+          
+          <div class="span-17 last">
+             <div class="topsearch">
+             <form action="/search" id="top_search_form" method="get">
+                <input type="search" class="search" name="q" /> <input type="submit" value="Search" />
+                <input type="hidden" name="type" value="Everything" />
+                <input type="hidden" name="repo" value="" />
+                <input type="hidden" name="langOverride" value="" />
+                <input type="hidden" name="start_value" value="1" />
+              </form>
+             </div>
+          </div>
+          
+<!--          <div class="span-9 last">
+            <div class="userbox">
+                <% if logged_in? %>
+                  Welcome <%= current_user.name %>! Not you?
+                  <%= link_to "Log out", logout_path %>
+                <% else %>
+                  <%= link_to "Sign up", signup_path %> or
+                  <%= link_to "log in", login_path %>.
+                <% end %>
+            </div>
+          </div>-->
+        </div>
+
+        <div class="span-24 last">
+                <%- flash.each do |name, msg| -%>
+                  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+            <hr class="space" />                  
+                <%- end -%>
+
+
+        </div>
+
+        <div class="span-24 last">
+          <div id="menu">
+            <% if logged_in? %>
+              <ul>
+                <li><%= link_to "Submit a Ticket", new_ticket_path %></li>
+                <li><%= link_to "All Tickets (#{Ticket.visible_for(current_user).size})", tickets_path if logged_in? %></li>
+                <li><%= link_to "Mine (#{current_user.tickets.size})" %></li>
+                <li><%= link_to "Watched (#{current_user.watched_tickets.size})", watched_tickets_path %></li>
+                <li><%= link_to "Pages", pages_path %></li>
+                
+                  <li class="admin"><%= link_to "Categories", categories_path %></li>
+
+                  <li class="admin"><%= link_to "Organizers", organizers_path %></li>
+                  <li class="admin"><%= link_to "Users", users_path %></li>
+
+                
+              </ul>
+            <% end %>
+          </div>
+        </div>
+
+        <hr />
+
+
+
+        <div class="span-19 colborder" id="content">
+          <%- if show_title? -%>
+            <h1 id="title"><%=h yield(:title) %></h1>
+          <%- end -%>          
+          
+          <%= yield %>
+        </div>  
+<!--
+        <div class="span-4 last" id="sidebar">
           <% if logged_in? %>
-            Welcome <%= current_user.name %>! Not you?
-            <%= link_to "Log out", logout_path %>
-          <% else %>
-            <%= link_to "Sign up", signup_path %> or
-            <%= link_to "log in", login_path %>.
+            <% unless Page.all.empty? %>
+              <div id="recent-pages">
+                <h3 class="caps">Recent Pages <%= link_to feed_image, pages_path(:format => :atom, :user_credentials => current_user.single_access_token) if current_user %></h3>
+                <div class="box">
+                  <% for page in Page.all %>
+                    <div class="recent_page"><%= link_to page.name, page %> <%= public_image if page.published? %></div>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <div id="recent-tickets">
+              <h3 class="caps">Recent Tickets <%= link_to feed_image, tickets_path(:format => :atom, :user_credentials => current_user.single_access_token) if current_user %></h3>
+              <div class="box">
+                <% for ticket in Ticket.all %>
+                  <div class="recent_ticket">
+                    <%= link_to ticket.name, ticket, :class => 'quite' %> <%= public_image if ticket.published? %>
+                    <div class="quiet"><%= priority_image ticket.priority %> <%= ticket.state %></div>
+                    <div class="quiet"><%= time_ago_in_words ticket.updated_at %> ago</div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+            <div id="tags">
+              <h3 class="caps">Ticket Tags</h3>
+              <div class="box">
+                 tag_cloud Ticket.visible_for(current_user).tag_counts, %w(css1 css2 css3 css4) do |tag, css_class| %>
+                   link_to tag.name, tickets_path(:search => { :tag_list_like => tag.name }), :class => css_class %>
+                 end %>
+              </div>
+            </div>
           <% end %>
+        </div>  -->
+
+        <hr />
+
+        <div id="footer">
+          <div class="prepend-top push-8 span-16 last">
+            <span class="quiet">Copyright &copy; 2009</span> |
+            <a href="#" class="quiet">Privacy Policy</a> | 
+            <a href="#" class="quiet">Security Policy</a>
+          </div>
         </div>
-
-        <div id="navigation">
-          <ul>
-            <li><%= link_to "Tickets", tickets_path %></li>
-            <li><%= link_to "Manage Categories", categories_path %></li>            
-          </ul>
-        </div>
-
-        <%- if show_title? -%>
-          <h1 id="title"><%=h yield(:title) %></h1>
-        <%- end -%>
-
-        <%= yield %>
-      </div>
+      </div>      
     </body>
   </body>
 </html>
