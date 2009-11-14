@@ -1,3 +1,5 @@
+<% current_tab :new_ticket if @ticket.new_record? %>
+
 <% @ticket.priority ||= 1 %>
 
 <% semantic_form_for @ticket do |f| %>

@@ -64,6 +64,10 @@ class Ticket < ActiveRecord::Base
   def closed?
     state.to_sym == :closed
   end
+  
+  def assigned?(user = nil)
+    user ? assignee == user : !!assignee
+  end
 
   def self.active
     not_deleted.not_archived

@@ -211,4 +211,33 @@ describe Ticket do
       Ticket.not_deleted.should == [ticket_1]
     end
   end  
+  
+  describe "assigned?" do
+    before { @user = Factory(:user) }
+    
+    context "witout parameter" do
+      it "should be true when assigned to anybody" do        
+        Factory.build(:ticket, :assignee => @user).should be_assigned
+      end
+      
+      it "should be false when assigned to nobody" do
+        Factory.build(:ticket, :assignee => nil).should_not be_assigned
+      end
+    end
+    
+    context "with parameter" do
+      it "should be true when assigned to given user" do
+        Factory.build(:ticket, :assignee => @user).should be_assigned(@user)
+      end
+      
+      it "should be false when assigned to another user" do
+        another_user = Factory(:user)
+        Factory.build(:ticket, :assignee => another_user).should_not be_assigned(@user)
+      end
+      
+      it "should be false when assigned to nobody" do
+        Factory.build(:ticket, :assignee => nil).should_not be_assigned(@user)
+      end
+    end
+  end
 end

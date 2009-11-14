@@ -193,7 +193,7 @@ padding-left:20px;
 background:#FCFCFC; /*#EAF2F5; /* url(/images/modules/repo_menu/bg.png) repeat-x scroll 0 0;*/
 overflow:hidden;
 text-align:left;
-
+margin-top: 1.5em;
 }
 
 #menu ul {
@@ -232,7 +232,7 @@ padding:1em 0.9em 0.3em;
 color:black;
 }
 
-#menu ul li.active {
+#menu ul li.current {
 background:white url(../images/tab_active.png) repeat-x scroll 0 0;
 }
 
@@ -260,7 +260,7 @@ margin-left:2em;
 padding:0.3em;
 }
 
-#repo_sub_menu a.active {
+#repo_sub_menu a.current {
 background-color:#EEEEEE;
 }
 

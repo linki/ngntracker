@@ -8,7 +8,7 @@
       <%= stylesheet_link_tag 'blueprint/ie' %>
     <![endif]-->
     <%= stylesheet_link_tag 'blueprint/plugins/fancy-type/screen', 'blueprint/plugins/buttons/screen' %>
-    <%= stylesheet_link_tag 'pagination', 'formtastic', 'application' %>
+    <%= stylesheet_link_tag 'pagination', 'formtastic', 'jquery.gritter', 'application' %>
     <%= yield(:head) %>
   </head>
   <body>
@@ -49,38 +49,19 @@
         </div>
 
         <div class="span-24 last">
-                <%- flash.each do |name, msg| -%>
-                  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <%- flash.each do |name, msg| -%>
+            <%= content_tag :div, msg, :id => "flash_#{name}", :style => 'display:none' %>
             <hr class="space" />                  
-                <%- end -%>
-
-
-        </div>
+          <%- end -%>
+        <div>
 
         <div class="span-24 last">
           <div id="menu">
-            <% if logged_in? %>
-              <ul>
-                <li><%= link_to "Submit a Ticket", new_ticket_path %></li>
-                <li><%= link_to "All Tickets (#{Ticket.visible_for(current_user).size})", tickets_path if logged_in? %></li>
-                <li><%= link_to "Mine (#{current_user.tickets.size})" %></li>
-                <li><%= link_to "Watched (#{current_user.watched_tickets.size})", watched_tickets_path %></li>
-                <li><%= link_to "Pages", pages_path %></li>
-                
-                  <li class="admin"><%= link_to "Categories", categories_path %></li>
-
-                  <li class="admin"><%= link_to "Organizers", organizers_path %></li>
-                  <li class="admin"><%= link_to "Users", users_path %></li>
-
-                
-              </ul>
-            <% end %>
+            <%= navigation [:new_ticket, :tickets, :pages, :users, :logout] %>
           </div>
         </div>
 
         <hr />
-
-
 
         <div class="span-19 colborder" id="content">
           <%- if show_title? -%>
@@ -140,3 +121,5 @@
     </body>
   </body>
 </html>
+
+<%= javascript_include_tag 'jquery', 'jquery.gritter', 'application' %>

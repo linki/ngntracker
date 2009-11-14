@@ -23,7 +23,7 @@
       <td><%= link_to h(ticket.name), ticket %></td>
       <td><%=h ticket.category_name %></td>
       <td><%=h ticket.user_name %></td>
-      <td><%=h ticket.assignee_name %></td>      
+      <td><%= assigned_to(ticket.assignee) %></td>
       <td><%= time ticket.updated_at %></td>
     </tr>
   <% end %>

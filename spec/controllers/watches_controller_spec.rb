@@ -1,7 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
  
 describe WatchesController do
-  fixtures :all
   integrate_views
   
   before { @user = login_as_user }
