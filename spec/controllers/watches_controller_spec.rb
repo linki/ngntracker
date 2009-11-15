@@ -18,9 +18,10 @@ describe WatchesController do
   end
   
   it "destroy action should destroy model and redirect to index action" do
-    watch = Factory(:watch, :user => @user)
-    delete :destroy, :id => watch
-    response.should redirect_to(ticket_url(watch.ticket))
+    ticket = Factory(:ticket)    
+    watch = Factory(:watch, :user => @user, :ticket => ticket)
+    delete :destroy, :ticket_id => ticket
+    response.should redirect_to(ticket_url(ticket))
     Watch.exists?(watch.id).should be_false
   end
 end

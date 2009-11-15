@@ -1,9 +1,17 @@
 <% title "Tickets" %>
 
-<% form_tag tickets_path, :method => :get do %>
-  <%= label_tag :search %>
-  <%= text_field_tag :search, params[:search] %>
-  <%= submit_tag "Submit" %>
+<% form_for @search do |f| %>
+  <p>
+    <%= f.label :name_or_description_like, 'Search' %>
+    <%= f.text_field :name_or_description_like %>
+  </p>
+  <p>
+    <%= f.label :category_with_ancestors_id %>    
+    <%= f.select :category_with_ancestors_id, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}".strip }, :include_blank => true %>
+  </p>
+  <p>
+    <%= f.submit 'Submit' %>
+  </p>
 <% end %>
 
 <table id="tickets">

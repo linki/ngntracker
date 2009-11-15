@@ -33,7 +33,7 @@ class Ticket < ActiveRecord::Base
              :portal    =>  :name,
              :assignee  =>  :name
 
-  named_scope :recent, :order => 'updated_at DESC'
+  named_scope :recent, :order => 'tickets.updated_at DESC'
 
   named_scope :visible_for, lambda { |user|
     { :conditions => ['tickets.user_id = ? OR tickets.published_at IS NOT NULL AND tickets.published_at <= ?', user.id, Time.now.utc] }
@@ -73,7 +73,11 @@ class Ticket < ActiveRecord::Base
     not_deleted.not_archived
   end
 
-  def self.search(params)
-    all :conditions => ['name LIKE :search OR description LIKE :search', { :search => "%#{params[:search]}%" }]
-  end
+  named_scope :category_with_ancestors_id, lambda { |category_id|
+    { :conditions => ['category_id IN (?)', Category.find(category_id).self_and_descendants] }
+  }
+
+#  def self.search(params)
+#    name_or_description_or_category_name_like(params[:search])
+#  end
 end

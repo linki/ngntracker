@@ -15,7 +15,7 @@ Feature: Create User
             | Email                 | foo@bar.com |
             | Password              | foobar      |
             | Password Confirmation | foobar      |
-    And I press "Create User"
+    And I press "Submit"
     Then I should see "Successfully created user." within "#flash_notice"
     And 1 email should be delivered to foo@bar.com
     And that email should have subject: "Successfully Registered"

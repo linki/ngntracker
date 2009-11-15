@@ -9,4 +9,22 @@ $(function($) {
       text: $(this).html()
     });
   });
-});
+  
+  $("#ticket_portal_input").hide()
+  $("#ticket_organizer_id").change(function() {
+    container = $("#ticket_portal_id")
+    template = "<option value='{id}'>{name}</option>"
+    organizer_id = $(this).children('option:selected').val();
+    if (organizer_id > 0) {
+      $.getJSON("/portals.json?search[organizer_id]=" + organizer_id, function(entries) {
+        container.html('<option></option>')
+        $.each(entries, function(i, entry) {
+          container.append($.nano(template, entry.portal))
+        })
+        $("#ticket_portal_input").show()
+      });
+    } else {
+      $("#ticket_portal_input").hide();
+    }
+  });
+});  

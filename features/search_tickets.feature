@@ -4,27 +4,37 @@ Feature: Search Tickets
   I want search in the list of public and my own tickets
   
   Background:
-    Given I am logged in as "martin"
-      And I have the following tickets in the database:
-            | name                           | description                  | user_login | published |
-            | Fehler auf der Plattform       | Einloggen funktioniert nicht | martin     | true      |
-            | Austeller wird nicht angezeigt | Obwohl er freigeschaltet ist | martin     | true      |
+    Given I am logged in
 
     Scenario: See all tickets without search string
-       When I go to the tickets page
-       Then I should see "Fehler auf der Plattform" within "#tickets"
-        And I should see "Austeller wird nicht angezeigt" within "#tickets"
+      Given a ticket exists with name: "Fehler auf der Plattform", published_at: "2000-01-01"
+      When I go to the tickets page
+      Then I should see "Fehler auf der Plattform" within "#tickets"
 
     Scenario: Search in name
-      When I go to the tickets page
-       And I fill in "Search" with "Fehler"
-       And I press "Submit"
+      Given a ticket exists with name: "Fehler auf der Plattform", published_at: "2000-01-01"
+      And a ticket exists with name: "Aussteller wird nicht angezeigt", published_at: "2000-01-01"
+      When I go to the tickets page      
+      And I fill in "Search" with "Fehler"
+      And I press "Submit"
       Then I should see "Fehler auf der Plattform" within "#tickets"
-       But I should not see "Austeller wird nicht angezeigt"
+      But I should not see "Austeller wird nicht angezeigt"
   
     Scenario: Search in description
+      Given a ticket exists with name: "Fehler auf der Plattform", description: "Einloggen funktioniert nicht", published_at: "2000-01-01"
+      And a ticket exists with name: "Aussteller wird nicht angezeigt", description: "Obwohl er freigeschaltet ist", published_at: "2000-01-01"
       When I go to the tickets page
-       And I fill in "Search" with "Einloggen"
-       And I press "Submit"
+      And I fill in "Search" with "Einloggen"
+      And I press "Submit"
       Then I should see "Fehler auf der Plattform" within "#tickets"
-       But I should not see "Austeller wird nicht angezeigt"
+      But I should not see "Austeller wird nicht angezeigt"
+      
+    Scenario: Search in category name with category select
+      Given a category exists with name: "General"
+      And a ticket exists with name: "Fehler auf der Plattform", category: that category, published_at: "2000-01-01"
+      And a ticket exists with name: "Aussteller wird nicht angezeigt", category: that category, published_at: "2000-01-01"
+      When I go to the tickets page
+      And I select "General" from "Category"
+      And I press "Submit"
+      Then I should see "Fehler auf der Plattform" within "#tickets"
+      But I should not see "Austeller wird nicht angezeigt"      

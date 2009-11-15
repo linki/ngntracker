@@ -1,5 +1,17 @@
-<% title "New User" %>
+<% title "Sign up" %>
 
-<%= render :partial => 'form' %>
+<p>Already have an account? <%= link_to "Log in", login_path %>.</p>
 
-<p><%= link_to "Back to List", users_path %></p>
+<% semantic_form_for @user do |f| %>
+  <% f.inputs do %>
+    <%= f.input :perishable_token, :label => "Registration Token" %>  
+    <%= f.input :email %>
+    <%= f.input :login %>
+    <%= f.input :name %>    
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>    
+  <% end %>
+  <% f.buttons do %>
+    <%= f.commit_button 'Submit' %>
+  <% end %>  
+<% end %>

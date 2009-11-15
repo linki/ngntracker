@@ -9,6 +9,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 Rails::Initializer.run do |config|
   config.gem "authlogic"
   config.gem "justinfrench-formtastic", :lib => 'formtastic', :source => 'http://gemcutter.org'
+  config.gem "searchlogic"
   
   config.gem 'acts_as_audited', :lib => false, :source => 'http://gemcutter.org'
   

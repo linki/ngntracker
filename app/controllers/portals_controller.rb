@@ -1,6 +1,11 @@
 class PortalsController < ApplicationController
   def index
-    @portals = Portal.all
+    @search = Portal.search(params[:search])
+    @portals = @search.all
+    respond_to do |format|
+      format.html
+      format.json { render :json => @portals }
+    end
   end
   
   def show

@@ -9,18 +9,17 @@ class UsersController < ApplicationController
   
   def new
     @user = User.new
-    render :action => 'signup' unless logged_in?
   end
   
   def create
     @user = User.new(params[:user])
-    unless params[:user][:perishable_token].blank?
+    unless params[:user].nil? || params[:user][:perishable_token].blank?
       user = User.find_by_perishable_token(params[:user][:perishable_token])
       if user && user.update_attributes(params[:user])
         flash[:notice] = "Successfully registered your account."
         redirect_to user
       else
-        render :action => (logged_in? ? 'new' : 'signup')
+        render :action => 'new'
       end
     else
       if (@user.valid? || @user.errors.on(:email).nil? || @user.errors.on(:email).empty?) && @user.save_without_session_maintenance(false)
@@ -33,7 +32,7 @@ class UsersController < ApplicationController
         end
         redirect_to @user
       else
-        render :action => (logged_in? ? 'new' : 'signup')
+        render :action => 'new'
       end
     end
   end

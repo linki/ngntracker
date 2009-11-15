@@ -2,7 +2,8 @@ class TicketsController < ApplicationController
   before_filter :login_required, :except => [:new, :create]
   
   def index
-    @tickets = Ticket.active.visible_for(@current_user).recent.search(params)
+    @search = Ticket.active.visible_for(@current_user).recent.search(params[:search])
+    @tickets = @search.all
   end
   
   def show
@@ -55,17 +56,20 @@ class TicketsController < ApplicationController
   end
 
   def archived
-    @tickets = Ticket.not_deleted.archived.visible_for(@current_user).recent.search(params)
+    @search = Ticket.not_deleted.archived.visible_for(@current_user).recent.search(params[:search])
+    @tickets = @search.all
     render :action => 'index'
   end
   
   def deleted
-    @tickets = Ticket.deleted.visible_for(@current_user).recent.search(params)
+    @search = Ticket.deleted.visible_for(@current_user).recent.search(params[:search])
+    @tickets = @search.all
     render :action => 'index'
   end
   
   def watched
-    @tickets = @current_user.watched_tickets.visible_for(@current_user).recent.search(params)
+    @search = @current_user.watched_tickets.visible_for(@current_user).recent.search(params[:search])
+    @tickets = @search.all
     render :action => 'index'
   end
 

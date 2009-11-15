@@ -19,7 +19,8 @@ describe UsersController do
   end
   
   it "create action should render new template when model is invalid" do
-    User.any_instance.stubs(:valid?).returns(false)
+    ActiveRecord::Errors.any_instance.stubs(:on).returns(["can't be blank"])
+    # User.any_instance.stubs(:valid?).returns(false)
     post :create
     response.should render_template(:new)
   end
