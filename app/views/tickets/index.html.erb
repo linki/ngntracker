@@ -1,40 +1,56 @@
-<% title "Tickets" %>
+<div class="block">
+  <div class="secondary-navigation">
+    <ul>
+      <li class="first active"><%= link_to 'List', tickets_path %></li>
+      <li><%= link_to 'New', new_ticket_path %></li>
+    </ul>
+    <div class="clear"></div>
+  </div>          
+  <div class="content">          
+    <h2 class="title">All Tickets</h2>
+    <div class="inner">
+      <table class="table">
+        <tr>             
+          <th class="first"><input type="checkbox" class="checkbox toggle" /></th>
+          <th>ID</th>
+            <th>New</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Creator</th>
+            <th>Assigned to</th>
+            <th>Updated at</th>
+            <th class="last">&nbsp;</th>
+        </tr>
+        <% @tickets.each do |ticket| -%>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td><input type="checkbox" class="checkbox" name="id" value="1" /></td>
+          <td><%= ticket.id %></td>
+           <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
+           <td><%= link_to h(ticket.name), ticket %></td>
+           <td><%=h ticket.category_name %></td>
+           <td><%=h ticket.user_name %></td>
+           <td><%= assigned_to(ticket.assignee) %></td>
+           <td><%= time ticket.updated_at %></td>
+                     
+          <td class="last">
+            <%= link_to 'show', ticket %> |
+            <%= link_to 'edit', edit_ticket_path(ticket) %> |
+            <%= link_to 'destroy', ticket, :confirm => 'Are you sure?', :method => :delete %>
+          </td>
+        </tr>          
+        <% end -%>
+      </table>
+      <div class="actions-bar">
+        <div class="actions">
+          <input type="submit" class="button" value="Delete" />
+        </div>        
+        
+        <%= will_paginate @tickets  %>
+        
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<% form_for @search do |f| %>
-  <p>
-    <%= f.label :name_or_description_like, 'Search' %>
-    <%= f.text_field :name_or_description_like %>
-  </p>
-  <p>
-    <%= f.label :category_with_ancestors_id %>    
-    <%= f.select :category_with_ancestors_id, nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}".strip }, :include_blank => true %>
-  </p>
-  <p>
-    <%= f.submit 'Submit' %>
-  </p>
-<% end %>
-
-<table id="tickets">
-  <tr>
-    <th>ID</th>
-    <th>New</th>
-    <th>Name</th>
-    <th>Category</th>
-    <th>Creator</th>
-    <th>Assigned to</th>
-    <th>Updated at</th>
-  </tr>
-  <% for ticket in @tickets %>
-    <tr id="ticket-<%= ticket.id %>">
-      <td>#<%= ticket.id %></td>
-      <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
-      <td><%= link_to h(ticket.name), ticket %></td>
-      <td><%=h ticket.category_name %></td>
-      <td><%=h ticket.user_name %></td>
-      <td><%= assigned_to(ticket.assignee) %></td>
-      <td><%= time ticket.updated_at %></td>
-    </tr>
-  <% end %>
-</table>
-
-<p><%= link_to "Create Ticket", new_ticket_path %></p>
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

@@ -1,125 +1,48 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang='en-US' xml:lang='en-US' xmlns='http://www.w3.org/1999/xhtml'>
-  <head>
-    <title><%= h(yield(:title) || "Untitled") %></title>
-    <%= stylesheet_link_tag 'blueprint/screen' %>
-    <%= stylesheet_link_tag 'blueprint/print', :media => "print" %>
-    <!--[if lt IE 8]>
-      <%= stylesheet_link_tag 'blueprint/ie' %>
-    <![endif]-->
-    <%= stylesheet_link_tag 'blueprint/plugins/fancy-type/screen', 'blueprint/plugins/buttons/screen' %>
-    <%= stylesheet_link_tag 'pagination', 'formtastic', 'jquery.gritter', 'application' %>
-    <%= yield(:head) %>
-  </head>
-  <body>
-    <body>
-      <div class="container">
-
-        <div id="header" class="span-24 last">
-
-          <div class="prepend-1 span-6">
-            <div class="logo">
-               <%= link_to image_tag('ngntracker.png'), "http://Settings.domain/" %>
-             </div>
-          </div>
-          
-          <div class="span-17 last">
-             <div class="topsearch">
-             <form action="/search" id="top_search_form" method="get">
-                <input type="search" class="search" name="q" /> <input type="submit" value="Search" />
-                <input type="hidden" name="type" value="Everything" />
-                <input type="hidden" name="repo" value="" />
-                <input type="hidden" name="langOverride" value="" />
-                <input type="hidden" name="start_value" value="1" />
-              </form>
-             </div>
-          </div>
-          
-<!--          <div class="span-9 last">
-            <div class="userbox">
-                <% if logged_in? %>
-                  Welcome <%= current_user.name %>! Not you?
-                  <%= link_to "Log out", logout_path %>
-                <% else %>
-                  <%= link_to "Sign up", signup_path %> or
-                  <%= link_to "log in", login_path %>.
-                <% end %>
-            </div>
-          </div>-->
-        </div>
-
-        <div class="span-24 last">
-          <%- flash.each do |name, msg| -%>
-            <%= content_tag :div, msg, :id => "flash_#{name}", :style => 'display:none' %>
-            <hr class="space" />                  
-          <%- end -%>
-        <div>
-
-        <div class="span-24 last">
-          <div id="menu">
-            <%= navigation [:new_ticket, :tickets, :pages, :users, :logout] %>
-          </div>
-        </div>
-
-        <hr />
-
-        <div class="span-19 colborder" id="content">
-          <%- if show_title? -%>
-            <h1 id="title"><%=h yield(:title) %></h1>
-          <%- end -%>          
-          
-          <%= yield %>
-        </div>  
-<!--
-        <div class="span-4 last" id="sidebar">
-          <% if logged_in? %>
-            <% unless Page.all.empty? %>
-              <div id="recent-pages">
-                <h3 class="caps">Recent Pages <%= link_to feed_image, pages_path(:format => :atom, :user_credentials => current_user.single_access_token) if current_user %></h3>
-                <div class="box">
-                  <% for page in Page.all %>
-                    <div class="recent_page"><%= link_to page.name, page %> <%= public_image if page.published? %></div>
-                  <% end %>
-                </div>
-              </div>
-            <% end %>
-
-            <div id="recent-tickets">
-              <h3 class="caps">Recent Tickets <%= link_to feed_image, tickets_path(:format => :atom, :user_credentials => current_user.single_access_token) if current_user %></h3>
-              <div class="box">
-                <% for ticket in Ticket.all %>
-                  <div class="recent_ticket">
-                    <%= link_to ticket.name, ticket, :class => 'quite' %> <%= public_image if ticket.published? %>
-                    <div class="quiet"><%= priority_image ticket.priority %> <%= ticket.state %></div>
-                    <div class="quiet"><%= time_ago_in_words ticket.updated_at %> ago</div>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-
-            <div id="tags">
-              <h3 class="caps">Ticket Tags</h3>
-              <div class="box">
-                 tag_cloud Ticket.visible_for(current_user).tag_counts, %w(css1 css2 css3 css4) do |tag, css_class| %>
-                   link_to tag.name, tickets_path(:search => { :tag_list_like => tag.name }), :class => css_class %>
-                 end %>
-              </div>
-            </div>
-          <% end %>
-        </div>  -->
-
-        <hr />
-
-        <div id="footer">
-          <div class="prepend-top push-8 span-16 last">
-            <span class="quiet">Copyright &copy; 2009</span> |
-            <a href="#" class="quiet">Privacy Policy</a> | 
-            <a href="#" class="quiet">Security Policy</a>
-          </div>
-        </div>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><%= h(yield(:title) || "Untitled") %></title>
+	<%= stylesheet_link_tag 'web_app_theme', "themes/warehouse/style", 'formtastic', 'jquery.gritter' %>
+</head>
+<body>
+  <div id="container">
+    <div id="header">
+      <h1><a href="/">Web App</a></h1>
+      <div id="user-navigation">
+        <ul>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="/logout" class="logout">Logout</a></li>
+        </ul>
+        <div class="clear"></div>
       </div>      
-    </body>
-  </body>
+      <div id="main-navigation">
+        <%= navigation [:new_ticket, :tickets, :pages, :users, :logout] %>
+        <div class="clear"></div>
+      </div>
+    </div>    
+    <div id="wrapper">
+      <div class="flash">
+        <% flash.each do |type, message| -%>
+          <div class="message <%= type %>">
+            <p><%= message %></p>
+          </div>
+        <% end -%>
+      </div>
+      <div id="main">
+        <%= yield %>
+        <div id="footer">
+          <div class="block">
+            <p>Copyright &copy; 2009 Your Site.</p>
+          </div>      
+        </div>
+      </div>
+      <div id="sidebar">
+        <%= yield :sidebar %>
+      </div>
+      <div class="clear"></div>      
+    </div>    
+  </div>
+</body>
 </html>
-
-<%= javascript_include_tag 'jquery', 'jquery.gritter', 'jquery.nano', 'application' %>

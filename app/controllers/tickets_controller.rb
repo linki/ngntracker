@@ -3,7 +3,7 @@ class TicketsController < ApplicationController
   
   def index
     @search = Ticket.active.visible_for(@current_user).recent.search(params[:search])
-    @tickets = @search.all
+    @tickets = @search.paginate(:page => params[:page])
   end
   
   def show
