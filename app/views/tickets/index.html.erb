@@ -1,3 +1,5 @@
+<% title "All Tickets" %>
+
 <div class="block">
   <div class="secondary-navigation">
     <ul>
@@ -7,46 +9,43 @@
     <div class="clear"></div>
   </div>          
   <div class="content">          
-    <h2 class="title">All Tickets</h2>
+    <h2 class="title"><%= yield(:title) %></h2>
     <div class="inner">
       <table class="table">
         <tr>             
           <th class="first"><input type="checkbox" class="checkbox toggle" /></th>
           <th>ID</th>
-            <th>New</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Creator</th>
-            <th>Assigned to</th>
-            <th>Updated at</th>
-            <th class="last">&nbsp;</th>
+          <th>New</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Creator</th>
+          <th>Assigned to</th>
+          <th>Updated at</th>
+          <th class="last">&nbsp;</th>
         </tr>
         <% @tickets.each do |ticket| -%>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td><input type="checkbox" class="checkbox" name="id" value="1" /></td>
-          <td><%= ticket.id %></td>
-           <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
-           <td><%= link_to h(ticket.name), ticket %></td>
-           <td><%=h ticket.category_name %></td>
-           <td><%=h ticket.user_name %></td>
-           <td><%= assigned_to(ticket.assignee) %></td>
-           <td><%= time ticket.updated_at %></td>
-                     
-          <td class="last">
-            <%= link_to 'show', ticket %> |
-            <%= link_to 'edit', edit_ticket_path(ticket) %> |
-            <%= link_to 'destroy', ticket, :confirm => 'Are you sure?', :method => :delete %>
-          </td>
-        </tr>          
+          <tr class="<%= cycle("odd", "even") %>">
+            <td><input type="checkbox" class="checkbox" name="id" value="1" /></td>
+            <td><%= ticket.id %></td>
+            <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
+            <td><%= link_to h(ticket.name), ticket %></td>
+            <td><%=h ticket.category_name %></td>
+            <td><%=h ticket.user_name %></td>
+            <td><%= assigned_to(ticket.assignee) %></td>
+            <td><%= time ticket.updated_at %></td>
+            <td class="last">
+              <%= link_to 'show', ticket %> |
+              <%= link_to 'edit', edit_ticket_path(ticket) %> |
+              <%= link_to 'destroy', ticket, :confirm => 'Are you sure?', :method => :delete %>
+            </td>
+          </tr>          
         <% end -%>
       </table>
       <div class="actions-bar">
         <div class="actions">
           <input type="submit" class="button" value="Delete" />
         </div>        
-        
         <%= will_paginate @tickets  %>
-        
         <div class="clear"></div>
       </div>
     </div>
