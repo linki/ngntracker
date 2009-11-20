@@ -10,6 +10,7 @@ $(function($) {
     });
   });
   
+  // portal select depends on organizer select
   $("#ticket_portal_input").hide()
   $("#ticket_organizer_id").change(function() {
     container = $("#ticket_portal_id")

@@ -76,8 +76,10 @@ class Ticket < ActiveRecord::Base
   named_scope :category_with_ancestors_id, lambda { |category_id|
     { :conditions => ['category_id IN (?)', Category.find(category_id).self_and_descendants] }
   }
-
-#  def self.search(params)
-#    name_or_description_or_category_name_like(params[:search])
-#  end
+  
+  after_create :tweet_create_notification
+  
+  def tweet_create_notification
+    user.tweet! "#{user.name} created Ticket #{name}."
+  end
 end

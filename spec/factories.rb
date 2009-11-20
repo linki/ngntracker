@@ -26,6 +26,11 @@ Factory.define :ticket do |f|
   f.association :category
 end
 
+Factory.define :tweet do |f|
+  f.text "Quite hot today"
+  f.association :user
+end
+
 Factory.define :user do |f|
   f.sequence(:name) { |n| "Foo #{n}" }  
   f.sequence(:login) { |n| "foo#{n}" }

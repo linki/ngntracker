@@ -54,5 +54,10 @@ describe User do
   it "should assign visited tickets" do
     visited_tickets = [Factory(:ticket)]
     Factory.build(:user, :visited_tickets => visited_tickets).visited_tickets.should == visited_tickets
-  end  
+  end
+  
+  it "should assign tweets" do
+    tweets = [Factory(:tweet)]
+    Factory.build(:user, :tweets => tweets).tweets.should == tweets
+  end   
 end

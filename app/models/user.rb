@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :watches, :dependent => :destroy
   has_many :watched_tickets, :through => :watches, :source => :ticket
   
+  has_many :tweets
+  
   acts_as_authentic  
   
   def new_ticket?(ticket)
@@ -41,5 +43,9 @@ class User < ActiveRecord::Base
 
   def watch!(ticket)
     watches.find_or_create_by_ticket_id(ticket.id)
-  end  
+  end
+  
+  def tweet!(text)
+    tweets.create!(:text => text)
+  end
 end

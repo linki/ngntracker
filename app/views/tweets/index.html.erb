@@ -1,0 +1,19 @@
+<% title "Tweets" %>
+
+<table>
+  <tr>
+    <th>Text</th>
+    <th>User</th>
+  </tr>
+  <% for tweet in @tweets %>
+    <tr>
+      <td><%=h tweet.text %></td>
+      <td><%=h tweet.user.name if tweet.user %></td>
+      <td><%= link_to "Show", tweet %></td>
+      <td><%= link_to "Edit", edit_tweet_path(tweet) %></td>
+      <td><%= link_to "Destroy", tweet, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Tweet", new_tweet_path %></p>
