@@ -48,4 +48,8 @@ class User < ActiveRecord::Base
   def tweet!(text)
     tweets.create!(:text => text)
   end
+  
+  def admin?
+    true
+  end
 end

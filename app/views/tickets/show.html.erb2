@@ -1,0 +1,112 @@
+<% title h(@ticket.name) %>
+
+<div class="block">
+  <div class="secondary-navigation">
+    <ul>
+      <li class="first"><%= link_to 'List', tickets_path  %></li>
+      <li><%= link_to 'New', new_ticket_path %></li>
+      <li class="active"><%= link_to 'Show', @ticket %></li>
+      <li><%= link_to 'Pages', ticket_pages_path(@ticket) %></li>
+      <li><%= link_to 'Comments', ticket_comments_path(@ticket) %></li>
+    </ul>
+    <div class="clear"></div>
+  </div>          
+  <div class="content">
+    <div class="inner">
+      <h1><%= yield(:title) %></h1>
+      <p class="first">
+          <% if @current_user.watching?(@ticket) %>
+            You are watching this ticket. <%= link_to "Unwatch Ticket", [@ticket, :watch], :confirm => 'Are you sure?', :method => :delete %>
+          <% else %>
+            <%= link_to "Watch Ticket", ticket_watch_path(@ticket), :method => :post %>
+          <% end %>
+          <%= link_to "Close Ticket", close_ticket_path(@ticket), :method => :put %>
+          <% if @ticket.archived? %>
+            <%= link_to "Unarchive Ticket", unarchive_ticket_path(@ticket), :method => :put %>
+          <% else %>
+            <%= link_to "Archive Ticket", archive_ticket_path(@ticket), :method => :put %>    
+          <% end %>
+          <% if @ticket.deleted? %>
+            <%= link_to "Recycle Ticket", recycle_ticket_path(@ticket), :method => :put %>
+          <% else %>
+            <%= link_to "Delete Ticket", @ticket, :confirm => 'Are you sure?', :method => :delete %>
+          <% end %>
+        </p>
+      <p>
+        <%= simple_format @ticket.description %>
+      </p>
+      <p><span class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore</span></p>
+      <hr />
+        <p>
+          <span class="gray">The Ticket is <%= @ticket.state %> and has Priority <%= @ticket.priority %>. Responsible for this ticket is <%= @ticket.assignee ? @ticket.assignee_name : 'nobody' %>.</span>
+        </p>
+
+        <p>
+          <span class="gray">Created by <%= @ticket.user_name %> <%= time_ago_in_words @ticket.created_at %> ago (<%= time @ticket.created_at %>) in Category <%= @ticket.category_name_with_ancestors %>.</span>
+        </p>
+
+
+        <% unless @ticket.solution.blank? %>
+          <h3>Solution</h3>
+          <p>
+            <%=h @ticket.solution %>
+          </p>
+        <% end %>
+
+        <h3>Pages</h3>
+        <p>
+          <ul>
+            <%= render :partial => @ticket.pages.recent.published %>
+          </ul>
+        </p>
+
+        <p>
+          <%= link_to "Add a page", new_ticket_page_path(@ticket) %> to this ticket
+        </p>
+
+        <% if @visit %>
+          <p>
+            You visited this ticket <%= @visit.count %> times.
+          </p>
+
+          <p>
+            You were here <%= time_ago_in_words @visit.updated_at %> ago. (<%= time @visit.updated_at %>)
+          </p>
+        <% end %>
+
+        <p>
+          Last updated <%= time_ago_in_words @ticket.updated_at %> ago. (<%= time @ticket.updated_at %>)
+        </p>
+
+        <p>
+          <ul>
+          <% @ticket.audits.reverse.each do |audit| %>
+            <% if audit.action == 'create' %>
+              <li><%= time audit.created_at %>: <%= audit.user.name if audit.user %> created the ticket.</li>
+            <% end %>
+            <% if audit.action == 'update' %>
+              <% audit.changes.each do |attribute, change| %>
+                <li><%= time audit.created_at %>: <%= audit.user.name %> changed <%= attribute %> from "<%= change.first %>" to "<%= change.last %>".</li>
+              <% end %>
+            <% end %>
+          <% end %>
+          </ul>
+        </p>
+
+        <h2>Comments</h2>
+        <div id="comments">
+          <%= render :partial => @ticket.comments.recent %>
+          <%= render :partial => 'comments/form' %>    
+        </div>
+
+        <div class="actions">
+          <p>
+            <%= link_to "Back to list", tickets_path %> |
+            <%= link_to "Edit", edit_ticket_path(@ticket) %>
+          </p>
+        </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

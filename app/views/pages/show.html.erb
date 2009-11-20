@@ -1,17 +1,36 @@
 <% title h(@page.name) %>
 
-<p>
-  Created by <%= @page.user_name %> <%= time_ago_in_words @page.created_at %> ago (<%= time @page.created_at %>).
-</p>
+<div class="block">
+  <div class="secondary-navigation">
+    <ul>
+      <li class="first"><%= link_to 'List', pages_path  %></li>
+      <li><%= link_to 'New', new_page_path %></li>
+      <li class="active"><%= link_to 'Show', @page %></li>
+    </ul>
+    <div class="clear"></div>
+  </div>          
+  <div class="content">
+    <div class="inner">
+      <h1><%= yield(:title) %></h1>
+      <%= textilize @page.content %>
+      <p><span class="small">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore</span></p>
+      <hr />
+        <p>
+          <span class="gray">Last updated <%= time_ago_in_words @page.updated_at %> ago (<%= time @page.updated_at %>).</span>
+        </p>
 
-<%= textilize @page.content %>
+        <p>
+          <span class="gray">Created by <%= @page.user_name %> <%= time_ago_in_words @page.created_at %> ago (<%= time @page.created_at %>).</span>
+        </p>
 
-<p>
-  Last updated <%= time_ago_in_words @page.updated_at %> ago (<%= time @page.updated_at %>)
-</p>
+        <div class="actions">
+          <p>
+            <%= link_to "Back to list", pages_path %> |
+            <%= link_to "Edit", edit_page_path(@page) %>
+          </p>
+        </div>
+    </div>
+  </div>
+</div>
 
-<p>
-  <%= link_to "Edit", edit_page_path(@page) %> |
-  <%= link_to "Destroy", @page, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", ticket_pages_path(@page.ticket) %>
-</p>
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

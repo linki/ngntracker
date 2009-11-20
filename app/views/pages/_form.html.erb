@@ -1,10 +1,20 @@
-<% semantic_form_for [@ticket, @page] do |f| %>
-  <% f.inputs do %>
-    <%= f.input :name %>
-    <%= f.input :content %>
-    <%= f.input :published, :as => :boolean %>
-  <% end %>
-  <% f.buttons do %>
-    <%= f.commit_button %>
-  <% end %>
+<% semantic_form_for [@ticket, @page] do |f| -%>
+  <div class="columns">
+    <div class="column left">
+      <% f.inputs do %>
+        <%= f.input :name %>
+        <%= f.input :content %>
+      <% end %>
+    </div>  
+    <div class="column right">
+      <% f.inputs do %>  
+        <%= f.input :published, :as => :boolean %>
+      <% end %>
+    </div>
+  </div>
+  <div class="clear"></div>  
+  <div class="group navform">
+    <input type="submit" class="button" value="Save" /> or <%= link_to 'Cancel', pages_path %>
+  </div>
 <% end %>
+

@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
-  before_filter :login_required
+  before_filter :load_and_authorize_resource
+  
   # before_filter :find_ticket, :only => [:index, :new, :create]  
   
   def index

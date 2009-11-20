@@ -13,8 +13,7 @@
     <div class="inner">
       <table class="table">
         <tr>             
-          <th class="first"><input type="checkbox" class="checkbox toggle" /></th>
-          <th>ID</th>
+          <th class="first">ID</th>
           <th>New</th>
           <th>Name</th>
           <th>Category</th>
@@ -25,7 +24,6 @@
         </tr>
         <% @tickets.each do |ticket| -%>
           <tr class="<%= cycle("odd", "even") %>">
-            <td><input type="checkbox" class="checkbox" name="id" value="1" /></td>
             <td><%= ticket.id %></td>
             <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
             <td><%= link_to h(ticket.name), ticket %></td>
@@ -34,16 +32,17 @@
             <td><%= assigned_to(ticket.assignee) %></td>
             <td><%= time ticket.updated_at %></td>
             <td class="last">
-              <%= link_to 'show', ticket %> |
-              <%= link_to 'edit', edit_ticket_path(ticket) %> |
-              <%= link_to 'destroy', ticket, :confirm => 'Are you sure?', :method => :delete %>
+              <%= link_to 'show', ticket %>
+              <% if can? :manage, ticket %>
+                | <%= link_to 'edit', edit_ticket_path(ticket) %>
+                | <%= link_to 'destroy', ticket, :confirm => 'Are you sure?', :method => :delete %>
+              <% end %>
             </td>
           </tr>          
         <% end -%>
       </table>
       <div class="actions-bar">
         <div class="actions">
-          <input type="submit" class="button" value="Delete" />
         </div>        
         <%= will_paginate @tickets  %>
         <div class="clear"></div>

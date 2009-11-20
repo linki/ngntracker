@@ -7,10 +7,11 @@ RAILS_GEM_VERSION = '2.3.4' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  config.gem "authlogic"
-  config.gem "justinfrench-formtastic", :lib => 'formtastic', :source => 'http://gemcutter.org'
-  config.gem "searchlogic"
-  config.gem 'mislav-will_paginate', :lib => 'will_paginate', :source => 'http://gems.github.com'
+  config.gem "authlogic", :source => "http://gemcutter.org"
+  config.gem "formtastic", :source => 'http://gemcutter.org'
+  config.gem "searchlogic", :source => "http://gemcutter.org"
+  config.gem 'will_paginate', :source => "http://gemcutter.org"
+  config.gem "cancan", :source => "http://gemcutter.org"
   
   config.gem 'acts_as_audited', :lib => false, :source => 'http://gemcutter.org'
   

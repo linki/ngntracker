@@ -1,35 +1,34 @@
 <% semantic_form_for @ticket, :html => { :class => 'form' } do |f| -%>
-<div class="columns">
-                  <div class="column left">
-  <% f.inputs do %>
-    <%= f.input :name, :hint => 'Enter a descriptive name for your ticket' %>
-    <%= f.input :description, :hint => 'Describe your problem as precise as possible' %>
-    <% unless @ticket.new_record? %>
-      <%= f.input :solution %>
-    <% end %>
-    
-  <% end %>
-</div>  
-<div class="column right">
-  <% f.inputs do %>  
-    <%= f.input :category, :hint => 'Choose one of the categories that match best', :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}".strip } %>  
-    <%= f.input :organizer, :hint => 'Select the concerned organizer' %>
-    <%= f.input :portal, :hint => 'Select the concerned portal' %>
-    <%= f.input :priority, :hint => "Estimate the problem's priority", :collection => [1, 2, 3], :as => :radio %>
-    <% unless logged_in? %>
-      <% f.inputs :for => :user do |user_form| %>
-        <%= user_form.input :email, :hint => 'Enter your email address so you can track your problem' %>
+  <div class="columns">
+    <div class="column left">
+      <% f.inputs do %>
+        <%= f.input :name, :hint => 'Enter a descriptive name for your ticket' %>
+        <%= f.input :description, :hint => 'Describe your problem as precise as possible' %>
+        <% unless @ticket.new_record? %>
+          <%= f.input :solution %>
+        <% end %>
       <% end %>
-    <% end %>
-    <% unless @ticket.new_record? %>
-      <%= f.input :assignee %>
-      <%= f.input :published, :as => :boolean %>
-    <% end %>
-  <% end %>
-</div>
-                <div class="clear"></div>  
+    </div>  
+    <div class="column right">
+      <% f.inputs do %>  
+        <%= f.input :category, :hint => 'Choose one of the categories that match best', :collection => nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}".strip } %>  
+        <%= f.input :organizer, :hint => 'Select the concerned organizer' %>
+        <%= f.input :portal, :hint => 'Select the concerned portal' %>
+        <%= f.input :priority, :hint => "Estimate the problem's priority", :collection => [1, 2, 3], :as => :radio %>
+        <% unless logged_in? %>
+          <% f.inputs :for => :user do |user_form| %>
+            <%= user_form.input :email, :hint => 'Enter your email address so you can track your problem' %>
+          <% end %>
+        <% end %>
+        <% unless @ticket.new_record? %>
+          <%= f.input :assignee %>
+          <%= f.input :published, :as => :boolean %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="clear"></div>  
   <div class="group navform">
     <input type="submit" class="button" value="Save" /> or <%= link_to 'Cancel', tickets_path %>
   </div>
-
 <% end %>

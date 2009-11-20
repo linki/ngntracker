@@ -1,25 +1,49 @@
-<% title "Pages" %>
+<% title "All Pages" %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Content</th>
-    <th>Ticket</th>
-    <th>User</th>
-    <th>Published At</th>
-  </tr>
-  <% for page in @pages %>
-    <tr>
-      <td><%=h page.name %></td>
-      <td><%=h page.content %></td>
-      <td><%=h page.ticket_name %></td>
-      <td><%=h page.user_name %></td>
-      <td><%= time page.published_at %></td>
-      <td><%= link_to "Show", page %></td>
-      <td><%= link_to "Edit", edit_page_path(page) %></td>
-      <td><%= link_to "Destroy", page, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="block">
+  <div class="secondary-navigation">
+    <ul>
+      <li class="first active"><%= link_to 'List', pages_path %></li>
+      <li><%= link_to 'New', new_page_path %></li>
+    </ul>
+    <div class="clear"></div>
+  </div>          
+  <div class="content">          
+    <h2 class="title"><%= yield(:title) %></h2>
+    <div class="inner">
+      <table class="table">
+        <tr>             
+          <th class="first">ID</th>
+          <th>Name</th>
+          <th>Content</th>
+          <th>Ticket</th>
+          <th>User</th>
+          <th>Published At</th>
+          <th class="last">&nbsp;</th>
+        </tr>
+        <% @pages.each do |page| -%>
+          <tr class="<%= cycle("odd", "even") %>">
+            <td><%= page.id %></td>
+            <td><%=h page.name %></td>
+            <td><%=h page.content %></td>
+            <td><%=h page.ticket_name %></td>
+            <td><%=h page.user_name %></td>
+            <td><%= time page.published_at %></td>
+            <td class="last">
+              <%= link_to 'show', page %> |
+              <%= link_to 'edit', edit_page_path(page) %> |
+              <%= link_to 'destroy', page, :confirm => 'Are you sure?', :method => :delete %>
+            </td>
+          </tr>          
+        <% end -%>
+      </table>
+      <div class="actions-bar">
+        <div class="actions">
+        </div>        
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p><%= link_to "Create Page", new_page_path %></p>
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

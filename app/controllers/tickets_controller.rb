@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_filter :login_required, :except => [:new, :create]
+  before_filter :load_and_authorize_resource
   
   def index
     @search = Ticket.active.visible_for(@current_user).recent.search(params[:search])
@@ -7,18 +7,15 @@ class TicketsController < ApplicationController
   end
   
   def show
-    @ticket  = Ticket.find(params[:id])
     @comment = Comment.new
     @visit = @current_user.visit_of(@ticket)
     @current_user.visit!(@ticket)
   end
   
   def new
-    @ticket = Ticket.new
   end
   
   def create
-    @ticket = Ticket.new(params[:ticket])
     if logged_in?
       @ticket.user = @current_user
     else
@@ -35,11 +32,9 @@ class TicketsController < ApplicationController
   end
   
   def edit
-    @ticket = Ticket.find(params[:id])
   end
   
   def update
-    @ticket = Ticket.find(params[:id])
     if @ticket.update_attributes(params[:ticket])
       flash[:notice] = "Successfully updated ticket."
       redirect_to @ticket
@@ -49,7 +44,6 @@ class TicketsController < ApplicationController
   end
     
   def destroy
-    @ticket = Ticket.find(params[:id])
     @ticket.destroy_or_trash!
     flash[:notice] = "Successfully deleted the ticket."
     redirect_to tickets_url
@@ -74,28 +68,24 @@ class TicketsController < ApplicationController
   end
 
   def close
-    @ticket = Ticket.find(params[:id])
     @ticket.close!
     flash[:notice] = "Successfully closed the ticket."
     redirect_to @ticket
   end
   
   def archive
-    @ticket = Ticket.find(params[:id])
     @ticket.archive!
     flash[:notice] = "Successfully archived the ticket."
     redirect_to tickets_url
   end
 
   def unarchive
-    @ticket = Ticket.find(params[:id])
     @ticket.unarchive!
     flash[:notice] = "Successfully unarchived the ticket."
     redirect_to @ticket
   end
   
   def recycle
-    @ticket = Ticket.find(params[:id])
     @ticket.recycle!
     flash[:notice] = "Successfully recycled the ticket."
     redirect_to @ticket
