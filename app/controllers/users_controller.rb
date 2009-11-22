@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
+  before_filter :load_and_authorize_resource
+    
   def index
-    @users = User.all
+    @search = User.search(params[:search])
+    @users = @search.paginate(:page => params[:page])
   end
   
   def show
@@ -13,27 +16,12 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(params[:user])
-    unless params[:user].nil? || params[:user][:perishable_token].blank?
-      user = User.find_by_perishable_token(params[:user][:perishable_token])
-      if user && user.update_attributes(params[:user])
-        flash[:notice] = "Successfully registered your account."
-        redirect_to user
-      else
-        render :action => 'new'
-      end
+    if @user.save
+      Mailer.deliver_signup(@user)
+      flash[:notice] = "Successfully created user."
+      redirect_to @user
     else
-      if (@user.valid? || @user.errors.on(:email).nil? || @user.errors.on(:email).empty?) && @user.save_without_session_maintenance(false)
-        if logged_in?
-          flash[:notice] = "Successfully created user."
-          Mailer.deliver_signup(@user)
-        else
-          flash[:notice] = "Check your emails for your registration code."
-          Mailer.deliver_invitation(@user)
-        end
-        redirect_to @user
-      else
-        render :action => 'new'
-      end
+      render :action => 'new'
     end
   end
   

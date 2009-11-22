@@ -90,4 +90,8 @@ class Ticket < ActiveRecord::Base
   def tweet_create_notification
     user.tweet! "#{user.name} created Ticket #{name}." if user
   end
+  
+  named_scope :freetext, lambda { |search|
+    { :include => [:category, :comments], :conditions => ['tickets.name LIKE :search OR tickets.description LIKE :search OR comments.text LIKE :search OR category_id IN (:categories)', { :search => "%#{search}%", :categories => (Category.name_like(search).first.try(:self_and_descendants) || [])}] }
+  }  
 end

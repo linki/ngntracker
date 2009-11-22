@@ -14,7 +14,7 @@
       <div class="search">
         <% semantic_form_for @search do |f| %>
           <% f.inputs do %>
-            <%= f.input :name_like, :label => "Name" %>
+            <%= f.input :freetext %>
             <%= f.input :category_with_ancestors_id, :label => 'Category', :collection => nested_set_options(Category) {|i| ["#{'-' * i.level} #{i.name}".strip, i.id.to_s] }, :as => :select %>
             <%= f.input :state, :collection => ['open', 'processing', 'closed'], :as => :radio %>
           <% end %>

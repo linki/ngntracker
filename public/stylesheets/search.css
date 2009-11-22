@@ -1,0 +1,7 @@
+.search {
+  margin: 1em 0;
+}
+
+.search form.formtastic fieldset ol li.string input {
+  width: 30%;
+}

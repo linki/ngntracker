@@ -1,23 +1,57 @@
-<% title "Users" %>
+<% title "All Users" %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Login</th>
-    <th>Email</th>
-    <th>Single Access Token</th>
-  </tr>
-  <% for user in @users %>
-    <tr>
-      <td><%=h user.name %></td>      
-      <td><%=h user.login %></td>
-      <td><%=h user.email %></td>
-      <td><%=h user.single_access_token %></td>
-      <td><%= link_to "Show", user %></td>
-      <td><%= link_to "Edit", edit_user_path(user) %></td>
-      <td><%= link_to "Destroy", user, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="block">
+  <div class="secondary-navigation">
+    <ul>
+      <li class="first active"><%= link_to 'List', users_path %></li>
+      <li><%= link_to 'New', new_user_path %></li>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <div class="content">
+    <h2 class="title"><%= yield(:title) %></h2>
+    <div class="inner">
+      <div class="search">
+        <% semantic_form_for @search do |f| %>
+          <% f.inputs do %>
+            <%= f.input :name_like, :label => "Name" %>
+            <%= f.input :email_like, :label => "Email" %>
+          <% end %>
+          <% f.buttons do %>
+            <%= f.submit "Search" %>
+          <% end %>
+        <% end %>
+      </div>
+      <table class="table">
+        <tr>             
+          <th class="first">ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Created at</th>
+          <th class="last">&nbsp;</th>          
+        </tr>
+        <% @users.each do |user| -%>
+          <tr class="<%= cycle("odd", "even") %>">
+            <td><%= user.id %></td>
+            <td><%=h user.name %></td>
+            <td><%=h user.email %></td>
+            <td><%= time user.created_at %></td>
+            <td class="last">
+              <%= link_to 'show', user %> |
+              <%= link_to 'edit', edit_user_path(user) %> |
+              <%= link_to 'destroy', user, :confirm => 'Are you sure?', :method => :delete %>
+            </td>
+          </tr>          
+        <% end -%>
+      </table>
+      <div class="actions-bar">
+        <div class="actions">
+        </div>        
+        <%= will_paginate @users  %>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p><%= link_to "Create User", new_user_path %></p>
+<% content_for :sidebar, render(:partial => 'sidebar') -%>

@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_filter :login_required
+  before_filter :load_and_authorize_resource
   
   def index
     @tweets = Tweet.all(:order => 'created_at DESC')

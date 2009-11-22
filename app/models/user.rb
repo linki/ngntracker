@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
-  attr_accessible :name, :login, :email, :password, :password_confirmation
+  ROLES = %w(admin)
+  
+  attr_accessible :name, :login, :email, :password, :password_confirmation, :role
     
   validates_presence_of :name, :login, :email, :password, :password_confirmation
   
@@ -50,6 +52,6 @@ class User < ActiveRecord::Base
   end
   
   def admin?
-    true
+    role && role.to_sym == :admin
   end
 end
