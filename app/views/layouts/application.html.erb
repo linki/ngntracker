@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><%= h(yield(:title) || "Untitled") %></title>
-	<%= stylesheet_link_tag 'web_app_theme', "themes/warehouse/style", 'formtastic', 'jquery.gritter' %>
+	<%= stylesheet_link_tag 'web_app_theme', "themes/warehouse/style", 'formtastic', 'formtastic_changes', 'jquery.gritter', 'tickets', 'comments' %>
 </head>
 <body>
   <div id="container">
@@ -44,5 +44,6 @@
       <div class="clear"></div>      
     </div>    
   </div>
+  <%= javascript_include_tag 'jquery', 'jquery.gritter', 'jquery.nano', 'application' %>
 </body>
 </html>

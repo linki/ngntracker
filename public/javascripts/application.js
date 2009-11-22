@@ -11,7 +11,9 @@ $(function($) {
   });
   
   // portal select depends on organizer select
-  $("#ticket_portal_input").hide()
+  if($("#ticket_portal_input option:selected").val() == 0) {
+    $("#ticket_portal_input").hide()
+  }
   $("#ticket_organizer_id").change(function() {
     container = $("#ticket_portal_id")
     template = "<option value='{id}'>{name}</option>"

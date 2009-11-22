@@ -7,37 +7,43 @@
       <li><%= link_to 'New', new_ticket_path %></li>
     </ul>
     <div class="clear"></div>
-  </div>          
+  </div>
   <div class="content">          
     <h2 class="title"><%= yield(:title) %></h2>
     <div class="inner">
+      <div class="search">
+        <% semantic_form_for @search do |f| %>
+          <% f.inputs do %>
+            <%= f.input :name_like, :label => "Name" %>
+            <%= f.input :category_with_ancestors_id, :label => 'Category', :collection => nested_set_options(Category) {|i| ["#{'-' * i.level} #{i.name}".strip, i.id.to_s] }, :as => :select %>
+            <%= f.input :state, :collection => ['open', 'processing', 'closed'], :as => :radio %>
+          <% end %>
+          <% f.buttons do %>
+            <%= f.submit "Search" %>
+          <% end %>
+        <% end %>
+      </div>
       <table class="table">
         <tr>             
           <th class="first">ID</th>
           <th>New</th>
-          <th>Name</th>
+          <th>State</th>
+          <th>Title</th>
           <th>Category</th>
-          <th>Creator</th>
-          <th>Assigned to</th>
-          <th>Updated at</th>
-          <th class="last">&nbsp;</th>
+          <th>Submitter</th>
+          <th>Responsible</th>
+          <th>Last Update</th>
         </tr>
         <% @tickets.each do |ticket| -%>
           <tr class="<%= cycle("odd", "even") %>">
             <td><%= ticket.id %></td>
-            <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>      
+            <td><strong><%= @current_user.new_ticket?(ticket) ? 'new' : '' %></strong></td>
+            <td><%= ticket.state %></td>
             <td><%= link_to h(ticket.name), ticket %></td>
             <td><%=h ticket.category_name %></td>
             <td><%=h ticket.user_name %></td>
             <td><%= assigned_to(ticket.assignee) %></td>
             <td><%= time ticket.updated_at %></td>
-            <td class="last">
-              <%= link_to 'show', ticket %>
-              <% if can? :manage, ticket %>
-                | <%= link_to 'edit', edit_ticket_path(ticket) %>
-                | <%= link_to 'destroy', ticket, :confirm => 'Are you sure?', :method => :delete %>
-              <% end %>
-            </td>
           </tr>          
         <% end -%>
       </table>

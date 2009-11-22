@@ -1,11 +1,9 @@
 <div class="comment">
   <p>
-    <%= comment.user_name %> says:
+    <%= time comment.created_at %> - <%= comment.user_name %> says:
   </p>
-  
   <p>
     <%= textilize comment.text %>
   </p>
-  
   <hr />
 </div>

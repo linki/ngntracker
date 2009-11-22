@@ -1,5 +1,5 @@
 class Ticket < ActiveRecord::Base
-  attr_accessible :name, :description, :solution, :priority, :category_id, :organizer_id, :assignee_id, :published
+  attr_accessible :name, :description, :solution, :priority, :category_id, :organizer_id, :portal_id, :assignee_id, :published
   
   validates_presence_of :name, :description, :category
   
@@ -45,20 +45,28 @@ class Ticket < ActiveRecord::Base
   
   aasm_initial_state :new
 
-  aasm_state :new
-  aasm_state :process
+  aasm_state :open
+  aasm_state :processing
   aasm_state :closed
   
   aasm_event :process do
-    transitions :to => :process, :from => [:new]
+    transitions :to => :processing, :from => [:open]
   end
 
   aasm_event :close do
-    transitions :to => :closed, :from => [:new, :process]
+    transitions :to => :closed, :from => [:open, :processing]
+  end
+
+  aasm_event :reopen do
+    transitions :to => :open, :from => [:closed]
   end
   
   def open?
-    !closed?
+    state.to_sym == :open
+  end
+  
+  def processing?
+    state.to_sym == :processing
   end
   
   def closed?
@@ -80,6 +88,6 @@ class Ticket < ActiveRecord::Base
   after_create :tweet_create_notification
   
   def tweet_create_notification
-    user.tweet! "#{user.name} created Ticket #{name}."
+    user.tweet! "#{user.name} created Ticket #{name}." if user
   end
 end

@@ -6,8 +6,6 @@
       <li class="first"><%= link_to 'List', tickets_path  %></li>
       <li><%= link_to 'New', new_ticket_path %></li>
       <li class="active"><%= link_to 'Show', @ticket %></li>
-      <li><%= link_to 'Pages', ticket_pages_path(@ticket) %></li>
-      <li><%= link_to 'Comments', ticket_comments_path(@ticket) %></li>
     </ul>
     <div class="clear"></div>
   </div>          
@@ -18,44 +16,69 @@
         <div class="columns">
           <div class="column left">
             <%= textilize @ticket.description %>
-            
-
-            <h2>Comments</h2>
-            <div id="comments">
-              <%= render :partial => @ticket.comments.recent %>
-              <%= render :partial => 'comments/form' %>    
-            </div>
+            <% unless @ticket.solution.blank? %>
+              <h4>Solution</h4>
+              <%= textilize @ticket.description %>
+            <% end %>
+            <p>
+              <span class="gray">The Ticket is <%= @ticket.state %> and has Priority <%= @ticket.priority %>. Responsible for this ticket is <%= @ticket.assignee ? @ticket.assignee_name : 'nobody' %>.</span>
+            </p>
+            <p>
+              <span class="gray">Created by <%= @ticket.user_name %> <%= time_ago_in_words @ticket.created_at %> ago (<%= time @ticket.created_at %>) in Category <%= @ticket.category_name_with_ancestors %>.</span>
+            </p>
             <div class="actions">
-              <p>
-                <%= link_to "Back to list", tickets_path %> |
-                <%= link_to "Edit", edit_ticket_path(@ticket) %>
-              </p>
-            </div>
-
-          </div>  
-          <div class="column right">
-            <p class="first">
+              <p style="display: none">
                 <% if @current_user.watching?(@ticket) %>
-                  You are watching this ticket. <%= link_to "Unwatch Ticket", [@ticket, :watch], :confirm => 'Are you sure?', :method => :delete %>
+                  <%= link_to "Unwatch Ticket", [@ticket, :watch], :confirm => 'Are you sure?', :method => :delete %>
                 <% else %>
                   <%= link_to "Watch Ticket", ticket_watch_path(@ticket), :method => :post %>
                 <% end %>
-                <%= link_to "Close Ticket", close_ticket_path(@ticket), :method => :put %>
+              </p>
+              <p>
+                <% if @ticket.open? %>
+                  <% semantic_form_for @ticket, :url => assign_ticket_path, :method => :put, :html => { :class => 'form' } do |f| -%>
+                    <% f.inputs do %>
+                      <%= f.input :assignee, :hint => 'Assign somebody who shall be repsonsible for this ticket.' %>
+                    <% end %>  
+                    <div class="group navform">
+                      <input type="submit" class="button" value="Assign" />
+                    </div>
+                  <% end %>
+                <% end %>                
+                <% if @ticket.processing? %>
+                  <%= link_to "Close Ticket", close_ticket_path(@ticket), :method => :put %>
+                <% end %>
+                <% if @ticket.closed? %>
+                  <%= link_to "Reopen Ticket", reopen_ticket_path(@ticket), :method => :put %>
+                <% end %>          
+              </p>
+              <p style="display: none">
                 <% if @ticket.archived? %>
                   <%= link_to "Unarchive Ticket", unarchive_ticket_path(@ticket), :method => :put %>
                 <% else %>
                   <%= link_to "Archive Ticket", archive_ticket_path(@ticket), :method => :put %>    
                 <% end %>
+              </p>
+              <p style="display: none">
                 <% if @ticket.deleted? %>
                   <%= link_to "Recycle Ticket", recycle_ticket_path(@ticket), :method => :put %>
                 <% else %>
                   <%= link_to "Delete Ticket", @ticket, :confirm => 'Are you sure?', :method => :delete %>
                 <% end %>
               </p>
+              <p>
+                <%= link_to "Edit", edit_ticket_path(@ticket) %>
+              </p>
+            </div>
+          </div>
+          <div class="column right">
+            <div id="comments">
+              <%= render :partial => @ticket.comments.recent %>
+              <%= render :partial => 'comments/form' %>    
+            </div>
             </div>
         </div>
-              <div class="clear"></div>  
-   
+        <div class="clear"></div>     
       </div>
     </div>
   </div>

@@ -2,7 +2,7 @@ class TicketsController < ApplicationController
   before_filter :load_and_authorize_resource
   
   def index
-    @search = Ticket.active.visible_for(@current_user).recent.search(params[:search])
+    @search = Ticket.active.visible_for(@current_user).search(params[:search])
     @tickets = @search.paginate(:page => params[:page])
   end
   
@@ -72,6 +72,12 @@ class TicketsController < ApplicationController
     flash[:notice] = "Successfully closed the ticket."
     redirect_to @ticket
   end
+
+  def reopen
+    @ticket.reopen!
+    flash[:notice] = "Successfully reopend the ticket."
+    redirect_to @ticket
+  end
   
   def archive
     @ticket.archive!
@@ -88,6 +94,15 @@ class TicketsController < ApplicationController
   def recycle
     @ticket.recycle!
     flash[:notice] = "Successfully recycled the ticket."
+    redirect_to @ticket
+  end
+  
+  def assign
+    @user = User.find(params[:ticket][:assignee_id])
+    @ticket.assignee = @user
+    @ticket.process if @ticket.open?
+    @ticket.save!
+    flash[:notice] = "Successfully assigned the ticket."
     redirect_to @ticket
   end
 end
